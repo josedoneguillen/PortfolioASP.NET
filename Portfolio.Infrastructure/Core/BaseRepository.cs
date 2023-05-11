@@ -5,60 +5,61 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Portfolio.Domain.Core;
 using Portfolio.Infrastructure.Context;
 
 namespace Portfolio.Infrastructure.Core
 {
-    public abstract class BaseRepository<TEntity> : Domain.Repository.IBaseRepository<TEntity> where TEntity : class
+    public abstract class BaseRepository<TEntity> : Domain.Repository.IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly ApplicationDbContext context;
         private readonly DbSet<TEntity> myDbSet;
         public BaseRepository(ApplicationDbContext context) 
         {
             this.context = context;
-            this.context.Set<TEntity>();
+            this.myDbSet = this.context.Set<TEntity>();
         }
-        public async virtual Task<bool> exist(Expression<Func<TEntity, bool>> filter)
+        public async virtual Task<bool> Exist(Expression<Func<TEntity, bool>> filter)
         {
             return await this.myDbSet.AnyAsync(filter);
         }
 
-        public async virtual Task<TEntity> find(Expression<Func<TEntity, bool>> filter)
+        public async virtual Task<TEntity> Find(Expression<Func<TEntity, bool>> filter)
         {
             return await this.myDbSet.FindAsync(filter);
         }
 
-        public async virtual Task<TEntity> getEntityByID(int id)
+        public async virtual Task<TEntity> GetEntityByID(int id)
         {
             return await this.myDbSet.FindAsync(id);
         }
 
-        public async virtual Task<IEnumerable<TEntity>> getAll()
+        public async virtual Task<IEnumerable<TEntity>> GetAll()
         {
             return await this.myDbSet.ToListAsync();
         }
 
-        public async virtual Task save(TEntity entity)
+        public async virtual Task Save(TEntity entity)
         {
             await this.myDbSet.AddAsync(entity);
         }
 
-        public async virtual Task save(params TEntity[] entities)
+        public async virtual Task Save(params TEntity[] entities)
         {
             await this.myDbSet.AddRangeAsync(entities);
         }
 
-        public async virtual Task saveChanges()
+        public async virtual Task SaveChanges()
         {
             await this.context.SaveChangesAsync();
         }
 
-        public async virtual Task update(TEntity entity)
+        public async virtual Task Update(TEntity entity)
         {
             this.myDbSet.Update(entity);
         }
 
-        public async virtual Task update(params TEntity[] entities)
+        public async virtual Task Update(params TEntity[] entities)
         {
             this.myDbSet.UpdateRange(entities);
         }

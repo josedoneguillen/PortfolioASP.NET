@@ -6,13 +6,14 @@ namespace Portfolio.Domain.Core
 {
     public abstract class BaseEntity
     {
-        public int id { get; set; }
-        public bool isPublished { get; set; }
-        public bool isDeleted { get; set; }
-        public int idUserCreate { get; set; }
-        public int idUserDelete { get; set; }
-        public DateTime creationDate { get; set; }
-        public DateTime moditicationDate { get; set; }
-        public DateTime deletedDate { get; set; }
+        public int Id { get; set; }
+        public bool IsPublished { get; set; }
+        public bool IsDeleted { get; set; }
+        public int? IdUserModification { get; set; }
+        public int IdUserCreate { get; set; }
+        public int? IdUserDelete { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime? ModiticationDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
     }
 }

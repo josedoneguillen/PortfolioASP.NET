@@ -1,20 +1,21 @@
-﻿using System;
+﻿using Portfolio.Domain.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Portfolio.Domain.Repository
 {
-    public interface IBaseRepository<TEntity> where TEntity : class
+    public interface IBaseRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<TEntity> getEntityByID(int id);
-        Task<IEnumerable<TEntity>> getAll();
-        Task<TEntity> find(Expression<Func<TEntity, bool>> filter);
-        Task save(TEntity entity);
-        Task save(params TEntity[] entities);
-        Task update(TEntity entity);
-        Task update(params TEntity[] entities);
-        Task<bool> exist(Expression<Func<TEntity, bool>> filter);
-        Task saveChanges();
+        Task<TEntity> GetEntityByID(int id);
+        Task<IEnumerable<TEntity>> GetAll();
+        Task<TEntity> Find(Expression<Func<TEntity, bool>> filter);
+        Task Save(TEntity entity);
+        Task Save(params TEntity[] entities);
+        Task Update(TEntity entity);
+        Task Update(params TEntity[] entities);
+        Task<bool> Exist(Expression<Func<TEntity, bool>> filter);
+        Task SaveChanges();
     }
 }
