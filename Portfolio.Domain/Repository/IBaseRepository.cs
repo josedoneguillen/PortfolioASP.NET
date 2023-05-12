@@ -1,6 +1,7 @@
 ﻿using Portfolio.Domain.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Portfolio.Domain.Repository
         Task<TEntity> GetEntityByID(int id);
         Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> Find(Expression<Func<TEntity, bool>> filter);
+        Task<IQueryable<TEntity>> FindAll(Expression<Func<TEntity, bool>> filter);
         Task Save(TEntity entity);
         Task Save(params TEntity[] entities);
         Task Update(TEntity entity);

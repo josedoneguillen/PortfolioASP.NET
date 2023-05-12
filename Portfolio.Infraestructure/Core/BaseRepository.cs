@@ -6,14 +6,14 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Domain.Core;
-using Portfolio.Infrastructure.Context;
+using Portfolio.Infraestructure.Context;
 
-namespace Portfolio.Infrastructure.Core
+namespace Portfolio.Infraestructure.Core
 {
     public abstract class BaseRepository<TEntity> : Domain.Repository.IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly ApplicationDbContext context;
-        private readonly DbSet<TEntity> myDbSet;
+        protected DbSet<TEntity> myDbSet;
         public BaseRepository(ApplicationDbContext context) 
         {
             this.context = context;
@@ -27,6 +27,11 @@ namespace Portfolio.Infrastructure.Core
         public async virtual Task<TEntity> Find(Expression<Func<TEntity, bool>> filter)
         {
             return await this.myDbSet.FindAsync(filter);
+        }
+
+        public virtual Task<IQueryable<TEntity>> FindAll(Expression<Func<TEntity, bool>> filter)
+        {
+            return Task.FromResult(this.myDbSet.Where(filter));
         }
 
         public async virtual Task<TEntity> GetEntityByID(int id)

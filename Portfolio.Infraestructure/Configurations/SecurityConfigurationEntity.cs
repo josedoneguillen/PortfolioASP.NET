@@ -1,0 +1,38 @@
+﻿using Portfolio.Domain.Entities.Security;
+
+namespace Portfolio.Infraestructure.Configurations
+{
+    public class SecurityConfigurationEntity : IEntityTypeConfiguration<User>
+    {
+        public void Configure(EntityTypeBuilder<User> entity)
+        {
+            entity.Property(e => e.Password)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Email)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.DeletedDate).HasColumnType("datetime");
+
+            entity.Property(e => e.ModiticationDate).HasColumnType("datetime");
+
+            entity.Property(e => e.CreationDate)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getdate())");
+
+            entity.Property(e => e.FirstName)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Image)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        }
+    }
+}

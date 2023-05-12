@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Portfolio.Infrastructure.Context;
+using Portfolio.Infraestructure.Context;
 
 namespace Portfolio.IOC.Dependencies
 {

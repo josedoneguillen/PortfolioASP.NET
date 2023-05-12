@@ -1,18 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Domain.Entities.Security;
-using Portfolio.Infrastructure.Configurations;
 
-namespace Portfolio.Infrastructure.Context
+namespace Portfolio.Infraestructure.Context
 {
-    public partial class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
+        public DbSet<User> Users { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.AddConfigurationSecurityEntity();
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
     }

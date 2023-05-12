@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Portfolio.Infrastructure.Interfaces;
-using Portfolio.Infrastructure.Repositories;
+using Portfolio.Infraestructure.Interfaces;
+using Portfolio.Infraestructure.Repositories;
 
 namespace Portfolio.IOC.Dependencies
 {

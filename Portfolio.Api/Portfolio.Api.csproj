@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Porfolio.Application\Porfolio.Application.csproj" />
-    <ProjectReference Include="..\Portfolio.Infrastructure\Portfolio.Infrastructure.csproj" />
+    <ProjectReference Include="..\Portfolio.Infraestructure\Portfolio.Infraestructure.csproj" />
     <ProjectReference Include="..\Portfolio.IOC\Portfolio.IOC.csproj" />
   </ItemGroup>
 

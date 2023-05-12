@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Portfolio.Domain.Entities.Security;
-using Portfolio.Infrastructure.Interfaces;
+using Portfolio.Infraestructure.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,8 +21,8 @@ namespace Portfolio.Api.Controllers.Security
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var users = await this.userRepository.GetAll();
-            return Ok(users);
+            var users = await this.userRepository.FindAll(u => !u.IsDeleted);
+            return Ok(users.ToList());
         }
 
         // GET api/<UserController>/5

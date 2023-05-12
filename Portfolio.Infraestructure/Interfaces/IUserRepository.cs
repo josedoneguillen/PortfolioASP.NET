@@ -1,5 +1,5 @@
 ﻿using Portfolio.Domain.Entities.Security;
-namespace Portfolio.Infrastructure.Interfaces
+namespace Portfolio.Infraestructure.Interfaces
 {
     public interface IUserRepository : Domain.Repository.IBaseRepository<User>
     {
