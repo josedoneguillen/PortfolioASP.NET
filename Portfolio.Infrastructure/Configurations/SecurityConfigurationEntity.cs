@@ -10,6 +10,7 @@ namespace Portfolio.Infrastructure.Configurations
         {
             modelBuilder.Entity<User>(entity =>
             {
+                entity.ToTable("Users");
                 entity.Property(e => e.Password)
                     .HasMaxLength(100)
                     .IsUnicode(false);
