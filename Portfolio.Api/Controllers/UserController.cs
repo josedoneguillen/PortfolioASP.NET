@@ -4,7 +4,7 @@ using Portfolio.Infrastructure.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Portfolio.Api.Controllers.Security
+namespace Portfolio.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -27,9 +27,16 @@ namespace Portfolio.Api.Controllers.Security
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<User>> Get(int id)
         {
-            return "value";
+            var user = await this.userRepository.GetEntityByID(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
 
         // POST api/<UserController>

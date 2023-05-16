@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Portfolio.Domain.Core
+namespace Portfolio.Domain.Core 
 {
     public abstract class BaseEntity
     {
