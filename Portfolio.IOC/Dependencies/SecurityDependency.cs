@@ -10,6 +10,7 @@ namespace Portfolio.IOC.Dependencies
         {
             // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRolRepository, RolRepository>();
         }
     }
 }
