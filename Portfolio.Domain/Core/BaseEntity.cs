@@ -13,7 +13,7 @@ namespace Portfolio.Domain.Core
         public int IdUserCreate { get; set; }
         public int? IdUserDelete { get; set; }
         public DateTime CreationDate { get; set; }
-        public DateTime? ModiticationDate { get; set; }
+        public DateTime? ModificationDate { get; set; }
         public DateTime? DeletedDate { get; set; }
     }
 }

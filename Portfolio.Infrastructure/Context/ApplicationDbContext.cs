@@ -16,6 +16,7 @@ namespace Portfolio.Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.AddConfigurationSecurityEntity();
+            modelBuilder.AddConfigurationContentEntity();
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Portfolio.Domain.Entities.Security;
 
 namespace Portfolio.Infrastructure.Configurations
@@ -19,14 +18,6 @@ namespace Portfolio.Infrastructure.Configurations
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModiticationDate).HasColumnType("datetime");
-
-                entity.Property(e => e.CreationDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -39,7 +30,25 @@ namespace Portfolio.Infrastructure.Configurations
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                // Call the SetBaseProperties method from BaseConfigurationEntity
+                BaseConfigurationEntity.SetBaseProperties<User>(entity);
+
             });
+
+            // Roles table
+            modelBuilder.Entity<Rol>(entity =>
+            {
+                entity.ToTable("Rol");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Description).HasMaxLength(255);
+
+                // Call the SetBaseProperties method from BaseConfigurationEntity
+                BaseConfigurationEntity.SetBaseProperties<Rol>(entity);
+            });
+
+
+
         }
     }
 }

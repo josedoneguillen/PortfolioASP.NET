@@ -17,6 +17,8 @@ builder.Services.AddContextDependency(builder.Configuration.GetConnectionString(
 
 builder.Services.AddSecurityDependency();
 
+builder.Services.AddContentDependency();
+
 #endregion
 
 
