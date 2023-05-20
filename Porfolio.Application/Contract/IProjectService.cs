@@ -1,15 +1,15 @@
 ﻿using Portfolio.Application.Core;
-using Portfolio.Application.Dtos.User;
+using Portfolio.Application.Dtos.Project;
 using Portfolio.Application.Responses;
 using System.Threading.Tasks;
 
 namespace Portfolio.Application.Contract
 {
-    public interface IUserService
+    public interface IProjectService
     {
         Task<ServiceResult> Get();
         Task<ServiceResult> GetById(int Id);
-        Task<UserAddResponse> SaveUser(UserAddDto userAddDto);
-        Task<UserAddResponse> ModifyUser(UserUpdateDto userUpdateDto);
+        Task<ProjectAddResponse> SaveProject(ProjectAddDto projectAddDto);
+        Task<ProjectAddResponse> ModifyProject(ProjectUpdateDto projectUpdateDto);
     }
 }

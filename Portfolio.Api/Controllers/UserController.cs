@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Portfolio.Application.Contract;
+using Portfolio.Application.Dtos.User;
 using Portfolio.Domain.Entities.Security;
 using Portfolio.Infrastructure.Interfaces;
 
@@ -10,18 +12,18 @@ namespace Portfolio.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserService userService;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserService userService)
         { 
-            this.userRepository = userRepository;
+            this.userService = userService;
         }
 
         // GET: api/<UserController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var users = await this.userRepository.GetAll();
+            var users = await this.userService.Get();
             return Ok(users);
         }
 
@@ -29,7 +31,7 @@ namespace Portfolio.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            var user = await this.userRepository.GetEntityByID(id);
+            var user = await this.userService.GetById(id);
 
             if (user == null)
             {
@@ -41,10 +43,10 @@ namespace Portfolio.Api.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult> Post(User user)
+        public async Task<ActionResult> Post(UserAddDto user)
         {
-            await this.userRepository.Save(user);
-            await this.userRepository.SaveChanges();
+            await this.userService.SaveUser(user);
+            //await this.userRepository.SaveChanges();
             return Ok();
         }
 
