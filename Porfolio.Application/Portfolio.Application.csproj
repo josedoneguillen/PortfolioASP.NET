@@ -6,11 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dtos\Experiences\**" />
+    <EmbeddedResource Remove="Dtos\Experiences\**" />
+    <None Remove="Dtos\Experiences\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Dtos\BlogPost\" />
     <Folder Include="Dtos\Certification\" />
     <Folder Include="Dtos\CertificationCategory\" />
     <Folder Include="Dtos\ContactForm\" />
-    <Folder Include="Dtos\Experiences\" />
     <Folder Include="Dtos\Subscription\" />
     <Folder Include="Dtos\ProjectCategory\" />
     <Folder Include="Dtos\Project\" />

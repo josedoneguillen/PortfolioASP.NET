@@ -37,17 +37,48 @@ namespace Portfolio.Infrastructure.Repositories
             return users;
         }
 
+        public async override Task<User> GetEntityByID(int Id)
+        {
+            User user = new User();
+
+            try
+            {
+                user = await base.GetEntityByID(Id);
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError("Error obteniendo los usuarios", ex.ToString());
+            }
+
+            return user;
+        }
+
         public async override Task Save(User entities)
         {
             try
             {
                 await base.Save(entities);
+                await base.SaveChanges();
             }
             catch (Exception ex)
             { 
                 this._logger.LogError("Ocurrio un error guardando el usuario ", ex.ToString());
             }
             
+        }
+
+        public async override Task Update(User entities)
+        {
+            try
+            {
+                await base.Update(entities);
+                await base.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError("Ocurrio un error modificando el usuario ", ex.ToString());
+            }
+
         }
     }
 }
