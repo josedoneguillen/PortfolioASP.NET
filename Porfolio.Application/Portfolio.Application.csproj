@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\BlogPost\" />
+    <Folder Include="Dtos\Certification\" />
+    <Folder Include="Dtos\CertificationCategory\" />
+    <Folder Include="Dtos\ContactForm\" />
+    <Folder Include="Dtos\Experiences\" />
+    <Folder Include="Dtos\Subscription\" />
+    <Folder Include="Dtos\ProjectCategory\" />
+    <Folder Include="Dtos\Project\" />
+    <Folder Include="Dtos\Organization\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Portfolio.Infrastructure\Portfolio.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
