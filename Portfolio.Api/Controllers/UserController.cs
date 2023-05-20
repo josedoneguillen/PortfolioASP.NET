@@ -23,37 +23,57 @@ namespace Portfolio.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var users = await this.userService.Get();
-            return Ok(users);
+            var result = await this.userService.Get();
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var user = await this.userService.GetById(id);
+            var result = await this.userService.GetById(id);
 
-            if (user == null)
+            if (!result.Success)
             {
-                return NotFound();
+                return NotFound(result);
             }
 
-            return Ok(user);
+            return Ok(result);
         }
 
         // POST api/<UserController>
         [HttpPost]
         public async Task<ActionResult> Post(UserAddDto user)
         {
-            await this.userService.SaveUser(user);
-            //await this.userRepository.SaveChanges();
-            return Ok();
+            var result = await this.userService.SaveUser(user);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
         // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult> Put(UserUpdateDto user)
         {
+                var result = await this.userService.ModifyUser(user);
+
+                if (!result.Success)
+                {
+                    return NotFound(result);
+                }
+
+                return Ok(result);
+            
         }
 
         // DELETE api/<UserController>/5

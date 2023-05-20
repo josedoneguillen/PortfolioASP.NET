@@ -1,7 +1,7 @@
 ﻿
 namespace Portfolio.Application.Responses
 {
-    public class UserAddResponse : Core.ServiceResult
+    public class UserAddResponse
     {
         public int Id { get; set; }
     }
