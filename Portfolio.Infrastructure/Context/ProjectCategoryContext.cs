@@ -5,6 +5,6 @@ namespace Portfolio.Infrastructure.Context
 {
     public partial class ApplicationDbContext
     {
-        public DbSet<Project> ProjectCategories { get; set; }
+        public DbSet<ProjectCategory> ProjectsCategories { get; set; }
     }
 }

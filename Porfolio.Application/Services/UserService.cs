@@ -1,13 +1,14 @@
-﻿using Portfolio.Application.Core;
-using Portfolio.Application.Contract;
-using System.Threading.Tasks;
+﻿using System;
 using System.Linq;
-using Portfolio.Application.Responses;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Portfolio.Application.Core;
+using Portfolio.Application.Contract;
 using Portfolio.Application.Dtos.User;
 using Portfolio.Infrastructure.Interfaces;
-using Microsoft.Extensions.Logging;
-using System;
 using Portfolio.Domain.Entities.Security;
+using Portfolio.Application.Extensions;
+using System.Collections.Generic;
 
 namespace Portfolio.Application.Services
 {
@@ -24,32 +25,12 @@ namespace Portfolio.Application.Services
             this.result = new ServiceResult();
             this.logger = logger;
         }
-        public ServiceResult save()
-        {
-            throw new System.NotImplementedException();
-        }
 
         public async Task<ServiceResult> Get()
         {
             try
             {
-                var query = (from user in (await this.userRepository.GetAll())
-                             join rol in (await this.rolRepository.GetAll()) on user.RolId equals rol.Id
-                             select new Models.UserGetModel()
-                             {
-                                 Id = user.Id,
-                                 FirstName = user.FirstName,
-                                 LastName = user.LastName,
-                                 Email = user.Email,
-                                 PhoneNumber = user.PhoneNumber,
-                                 Description = user.Description,
-                                 Image = user.Image,
-                                 Position = user.Position,
-                                 Rol = rol.Name,
-                                 RolId = user.RolId
-                             }).ToList();
-
-                this.result.Data = query;
+                this.result.Data = await this.getUsers();
             }
             catch (Exception ex)
             {
@@ -66,24 +47,7 @@ namespace Portfolio.Application.Services
         {
             try
             {
-                var query = (from user in (await this.userRepository.GetAll())
-                             join rol in (await this.rolRepository.GetAll()) on user.RolId equals rol.Id
-                             where user.Id == Id
-                             select new Models.UserGetModel()
-                             {
-                                 Id = user.Id,
-                                 FirstName = user.FirstName,
-                                 LastName = user.LastName,
-                                 Email = user.Email,
-                                 PhoneNumber = user.PhoneNumber,
-                                 Description = user.Description,
-                                 Image = user.Image,
-                                 Position = user.Position,
-                                 Rol = rol.Name,
-                                 RolId = user.RolId
-                             }).FirstOrDefault();
-
-                this.result.Data = query;
+                this.result.Data = (await this.getUsers(Id)).FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -125,29 +89,18 @@ namespace Portfolio.Application.Services
                     return result;
                 }
 
-                user.FirstName = userUpdateDto.FirstName ?? user.FirstName;
-                user.LastName = userUpdateDto.LastName ?? user.LastName;
-                user.Email = userUpdateDto.Email ?? user.Email;
-                user.PhoneNumber = userUpdateDto.PhoneNumber ?? user.PhoneNumber;
-                user.Password = userUpdateDto.Password ?? user.Password;
-                user.Description = userUpdateDto.Description ?? user.Description;
-                user.Image = userUpdateDto.Image ?? user.Image;
-                user.Position = userUpdateDto.Position ?? user.Position;
-                user.RolId = userUpdateDto.RolId.HasValue ? userUpdateDto.RolId.Value : user.RolId;
-                user.IdUserModification = userUpdateDto.IdUser;
-                user.IsPublished = userUpdateDto.IsPublished.HasValue ? userUpdateDto.IsPublished.Value : user.IsPublished;
-                user.ModificationDate = DateTime.Now;
-                user.IsDeleted = userUpdateDto.IsDeleted.HasValue ? userUpdateDto.IsDeleted.Value : user.IsDeleted;
-                user.DeletedDate = (userUpdateDto.IsDeleted.HasValue && userUpdateDto.IsDeleted ==  true) ? DateTime.Now  : user.DeletedDate;
+                user = user.ConvertUserUpdateDtoToUser(userUpdateDto);
 
                 await this.userRepository.Update(user);
+
+                this.result.Message = "Usuario actualizado correctamente";
 
             }
             catch (Exception ex)
             {
                 // Send Notification
                 this.result.Success = false;
-                this.result.Message = "Error agregando el usuario";
+                this.result.Message = "Error modificando el usuario";
                 this.logger.Log(LogLevel.Error, $" {result.Message}", ex.ToString());
             }
 
@@ -187,29 +140,13 @@ namespace Portfolio.Application.Services
                     return result;
                 }
 
-                User user = new User()
-                {
-                    FirstName =    userAddDto.FirstName,
-                    LastName =     userAddDto.LastName,
-                    Email =        userAddDto.Email,
-                    PhoneNumber =  userAddDto.PhoneNumber,
-                    Password =     userAddDto.Password,
-                    Description =  userAddDto.Description,
-                    Image =        userAddDto.Image,
-                    Position =     userAddDto.Position,
-                    RolId =        userAddDto.RolId,
-                    IdUserCreate = userAddDto.IdUser,
-                    CreationDate = DateTime.Now,
-                    IsPublished =  true,
-                    IsDeleted =    false
-                };
-                    
+                User user = userAddDto.ConvertUserAddDtoToUser();
+
+
                 await this.userRepository.Save(user);
 
-                UserAddResponse userData = new UserAddResponse();
-                userData.Id = user.Id;
-
-                this.result.Data = userData;
+                this.result.Message = "Usuario agregado correctamente";
+                this.result.Data = user.Id;
 
             }
             catch (Exception ex)
@@ -221,6 +158,25 @@ namespace Portfolio.Application.Services
             }
 
             return this.result;
+        }
+
+        private async Task<List<Models.UserGetModel>> getUsers(int? Id = null)
+        {
+            List<Models.UserGetModel>? users = new List<Models.UserGetModel>();
+            try
+            {
+                users = (from user in (await this.userRepository.GetAll())
+                             join rol in (await this.rolRepository.GetAll()) on user.RolId equals rol.Id
+                             where user.Id == Id || !Id.HasValue
+                             select user.CreateUserGetModel(rol)).ToList();
+            }
+            catch (Exception ex)
+            {
+                users = null;
+                this.logger.Log(LogLevel.Error, "Error obteniendo los usuarios", ex.ToString());
+            }
+
+            return users;
         }
     }
 }

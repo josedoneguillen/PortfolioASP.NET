@@ -6,7 +6,8 @@ namespace Portfolio.Application.Dtos.ProjectCategory
 {
     public class ProjectCategoryDto : DtoBase
     {
-        public string Name { get; set; }
+        public int ProjectId { get; set; }
+        public int CategoryId { get; set; }
         public ICollection<ProjectDto>? Projects { get; set; }
     }
 }

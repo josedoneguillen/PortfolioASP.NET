@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Portfolio.Infrastructure.Interfaces;
+using Portfolio.Application.Contract;
+using Portfolio.Application.Dtos.Experience;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,44 +10,69 @@ namespace Portfolio.Api.Controllers
     [ApiController]
     public class ExperienceController : ControllerBase
     {
-        private readonly IExperienceRepository experienceRepository;
+        private readonly IExperienceService experienceService;
 
-        public ExperienceController(IExperienceRepository experienceRepository)
+        public ExperienceController(IExperienceService experienceService)
         {
-            this.experienceRepository = experienceRepository;
+            this.experienceService = experienceService;
         }
 
-        // GET: api/<UserController>
+        // GET: api/<ExperienceController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var roles = await this.experienceRepository.GetAll();
-            return Ok(roles);
+            var result = await this.experienceService.Get();
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // GET api/<RolController>/5
+        // GET api/<ExperienceController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            return "value";
+            var result = await this.experienceService.GetById(id);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // POST api/<RolController>
+        // POST api/<ExperienceController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] ExperienceAddDto experience)
         {
+            var result = await this.experienceService.SaveExperience(experience);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // PUT api/<RolController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/<ExperienceController>/5
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] ExperienceUpdateDto experience)
         {
+            var result = await this.experienceService.ModifyExperience(experience);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
+
         }
 
-        // DELETE api/<RolController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

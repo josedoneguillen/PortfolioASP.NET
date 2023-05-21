@@ -1,11 +1,12 @@
-﻿using Portfolio.Domain.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Portfolio.Domain.Core;
 
 namespace Portfolio.Domain.Entities
 {
     public class CertificationCategory : BaseEntity
     {
-        public string Name { get; set; }
-        public virtual ICollection<Certification> Certifications { get; set; }
+        public int CertificationId { get; set; }
+        public int CategoryId { get; set; }
+        public ICollection<Certification> Certifications { get; set; }
     }
 }

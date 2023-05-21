@@ -9,7 +9,7 @@ namespace Portfolio.Application.Contract
     {
         Task<ServiceResult> Get();
         Task<ServiceResult> GetById(int Id);
-        Task<ContactFormAddResponse> SaveContactForm(ContactFormAddDto contactFormAddDto);
-        Task<ContactFormAddResponse> ModifyContactForm(ContactFormUpdateDto contactFormUpdateDto);
+        Task<ServiceResult> SaveContactForm(ContactFormAddDto contactFormAddDto);
+        Task<ServiceResult> ModifyContactForm(ContactFormUpdateDto contactFormUpdateDto);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Portfolio.Infrastructure.Interfaces;
+using Portfolio.Application.Contract;
+using Portfolio.Application.Dtos.Rol;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,44 +10,69 @@ namespace Portfolio.Api.Controllers
     [ApiController]
     public class RolController : ControllerBase
     {
-        private readonly IRolRepository rolRepository;
+        private readonly IRolService rolService;
 
-        public RolController(IRolRepository rolRepository)
+        public RolController(IRolService rolService)
         {
-            this.rolRepository = rolRepository;
+            this.rolService = rolService;
         }
 
-        // GET: api/<UserController>
+        // GET: api/<RolController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var roles = await this.rolRepository.GetAll();
-            return Ok(roles);
+            var result = await this.rolService.Get();
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
         // GET api/<RolController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            return "value";
+            var result = await this.rolService.GetById(id);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
         // POST api/<RolController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] RolAddDto rol)
         {
+            var result = await this.rolService.SaveRol(rol);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
         // PUT api/<RolController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] RolUpdateDto rol)
         {
+            var result = await this.rolService.ModifyRol(rol);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
+
         }
 
-        // DELETE api/<RolController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

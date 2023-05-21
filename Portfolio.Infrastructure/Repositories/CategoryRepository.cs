@@ -12,49 +12,49 @@ using Portfolio.Infrastructure.Interfaces;
 
 namespace Portfolio.Infrastructure.Repositories
 {
-    public class ProjectRepository : BaseRepository<Project>, IProjectRepository
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<ProjectRepository> _logger;
-        public ProjectRepository(ApplicationDbContext context, ILogger<ProjectRepository> logger) : base(context)
+        private readonly ILogger<CategoryRepository> _logger;
+        public CategoryRepository(ApplicationDbContext context, ILogger<CategoryRepository> logger) : base(context)
         {
             this._context = context;
             this._logger = logger;
         }
 
-        public async override Task<IEnumerable<Project>> GetAll()
+        public async override Task<IEnumerable<Category>> GetAll()
         {
-            List<Project> projects = new List<Project>();
+            List<Category> categories = new List<Category>();
 
             try
             {
-                projects = await this._context.Projects.Where(u => !u.IsDeleted).ToListAsync();
+                categories = await this._context.Categories.Where(u => !u.IsDeleted).ToListAsync();
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Error obteniendo los proyectos", ex.ToString());
+                this._logger.LogError("Error obteniendo las categorias", ex.ToString());
             }
 
-            return projects;
+            return categories;
         }
 
-        public async override Task<Project> GetEntityByID(int Id)
+        public async override Task<Category> GetEntityByID(int Id)
         {
-            Project project = new Project();
+            Category category = new Category();
 
             try
             {
-                project = await base.GetEntityByID(Id);
+                category = await base.GetEntityByID(Id);
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Error obteniendo los proyectos", ex.ToString());
+                this._logger.LogError("Error obteniendo las categorias", ex.ToString());
             }
 
-            return project;
+            return category;
         }
 
-        public async override Task Save(Project entities)
+        public async override Task Save(Category entities)
         {
             try
             {
@@ -63,12 +63,12 @@ namespace Portfolio.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Ocurrio un error guardando el proyecto ", ex.ToString());
+                this._logger.LogError("Ocurrio un error guardando la categoria ", ex.ToString());
             }
 
         }
 
-        public async override Task Update(Project entities)
+        public async override Task Update(Category entities)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Portfolio.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Ocurrio un error modificando el proyecto ", ex.ToString());
+                this._logger.LogError("Ocurrio un error modificando la categoria ", ex.ToString());
             }
 
         }
