@@ -19,10 +19,6 @@ namespace Portfolio.Application.Services
             this.projectRepository = projectRepository;
             this.logger = logger;
         }
-        public ServiceResult save()
-        {
-            throw new System.NotImplementedException();
-        }
 
         public Task<ServiceResult> Get()
         {
@@ -34,14 +30,14 @@ namespace Portfolio.Application.Services
             throw new System.NotImplementedException();
         }
 
-        Task<ProjectAddResponse> IProjectService.ModifyProject(ProjectUpdateDto projectUpdateDto)
+        public Task<ServiceResult> SaveProject(ProjectAddDto projectAddDto)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        Task<ProjectAddResponse> IProjectService.SaveProject(ProjectAddDto projectAddDto)
+        public Task<ServiceResult> ModifyProject(ProjectUpdateDto projectUpdateDto)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

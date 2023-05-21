@@ -9,7 +9,7 @@ namespace Portfolio.Application.Contract
     {
         Task<ServiceResult> Get();
         Task<ServiceResult> GetById(int Id);
-        Task<CertificationCategoryAddResponse> SaveCertificationCategory(CertificationCategoryAddDto certificationCategoryAddDto);
-        Task<CertificationCategoryAddResponse> ModifyCertificationCategory(CertificationCategoryUpdateDto certificationCategoryUpdateDto);
+        Task<ServiceResult> SaveCertificationCategory(CertificationCategoryAddDto certificationCategoryAddDto);
+        Task<ServiceResult> ModifyCertificationCategory(CertificationCategoryUpdateDto certificationCategoryUpdateDto);
     }
 }

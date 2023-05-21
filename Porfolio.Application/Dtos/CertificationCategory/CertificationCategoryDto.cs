@@ -6,7 +6,8 @@ namespace Portfolio.Application.Dtos.CertificationCategory
 {
     public class CertificationCategoryDto : DtoBase
     {
-        public string Name { get; set; }
+        public int CertificationId { get; set; }
+        public int CategoryId { get; set; }
         public virtual ICollection<CertificationDto>? Certifications { get; set; }
     }
 }

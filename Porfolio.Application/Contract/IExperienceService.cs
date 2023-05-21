@@ -9,7 +9,7 @@ namespace Portfolio.Application.Contract
     {
         Task<ServiceResult> Get();
         Task<ServiceResult> GetById(int Id);
-        Task<ExperienceAddResponse> SaveExperience(ExperienceAddDto experienceAddDto);
-        Task<ExperienceAddResponse> ModifyExperience(ExperienceUpdateDto experienceUpdateDto);
+        Task<ServiceResult> SaveExperience(ExperienceAddDto experienceAddDto);
+        Task<ServiceResult> ModifyExperience(ExperienceUpdateDto experienceUpdateDto);
     }
 }

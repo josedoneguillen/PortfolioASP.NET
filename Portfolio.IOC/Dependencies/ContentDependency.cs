@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Portfolio.Application.Contract;
+using Portfolio.Application.Services;
 using Portfolio.Infrastructure.Interfaces;
 using Portfolio.Infrastructure.Repositories;
 
@@ -8,8 +10,10 @@ namespace Portfolio.IOC.Dependencies
     {
         public static void AddContentDependency(this IServiceCollection services)
         {
-            // Repositories
+            #region "Repositories"
             services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             services.AddScoped<ICertificationRepository, CertificationRepository>();
             services.AddScoped<ICertificationCategoryRepository, CertificationCategoryRepository>();
@@ -24,6 +28,15 @@ namespace Portfolio.IOC.Dependencies
             services.AddScoped<IProjectCategoryRepository, ProjectCategoryRepository>();
 
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            #endregion
+
+            #region "Services"
+            services.AddTransient<IBlogPostService, BlogPostService>();
+            services.AddTransient<IContactFormService, ContactFormService>();
+            services.AddTransient<IExperienceService, ExperienceService>();
+            services.AddTransient<IOrganizationService, OrganizationService>();
+            services.AddTransient<ISubscriptionService, SubscriptionService>();
+            #endregion
         }
     }
 }

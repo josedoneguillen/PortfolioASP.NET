@@ -21,7 +21,6 @@
     <Folder Include="Dtos\Project\" />
     <Folder Include="Dtos\Organization\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>

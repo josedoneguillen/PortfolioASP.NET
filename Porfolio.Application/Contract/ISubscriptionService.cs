@@ -9,7 +9,7 @@ namespace Portfolio.Application.Contract
     {
         Task<ServiceResult> Get();
         Task<ServiceResult> GetById(int Id);
-        Task<SubscriptionAddResponse> SaveSubscription(SubscriptionAddDto subscriptionAddDto);
-        Task<SubscriptionAddResponse> ModifySubscription(SubscriptionUpdateDto subscriptionUpdateDto);
+        Task<ServiceResult> SaveSubscription(SubscriptionAddDto subscriptionAddDto);
+        Task<ServiceResult> ModifySubscription(SubscriptionUpdateDto subscriptionUpdateDto);
     }
 }

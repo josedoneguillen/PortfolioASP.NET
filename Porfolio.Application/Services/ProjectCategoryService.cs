@@ -16,14 +16,9 @@ namespace Portfolio.Application.Services
         private readonly ILogger<ProjectCategoryService> logger;
         public ProjectCategoryService(IProjectCategoryRepository projectCategoryRepository, ILogger<ProjectCategoryService> logger)
         {
-            this.projectCategoryRepository = projectCategoryRepository;
+            this.projectCategoryRepository = projectCategoryRepository ?? throw new ArgumentNullException(nameof(projectCategoryRepository));
             this.logger = logger;
         }
-        public ServiceResult save()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Task<ServiceResult> Get()
         {
             throw new System.NotImplementedException();
@@ -33,15 +28,14 @@ namespace Portfolio.Application.Services
         {
             throw new System.NotImplementedException();
         }
-
-        Task<ProjectCategoryAddResponse> IProjectCategoryService.ModifyProjectCategory(ProjectCategoryUpdateDto projectCategoryUpdateDto)
+        public Task<ServiceResult> SaveProjectCategory(ProjectCategoryAddDto projectCategoryAddDto)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        Task<ProjectCategoryAddResponse> IProjectCategoryService.SaveProjectCategory(ProjectCategoryAddDto projectCategoryAddDto)
+        public Task<ServiceResult> ModifyProjectCategory(ProjectCategoryUpdateDto projectCategoryUpdateDto)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

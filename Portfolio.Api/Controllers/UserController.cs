@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Portfolio.Application.Contract;
 using Portfolio.Application.Dtos.User;
-using Portfolio.Domain.Entities.Security;
-using Portfolio.Infrastructure.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -49,7 +47,7 @@ namespace Portfolio.Api.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult> Post(UserAddDto user)
+        public async Task<ActionResult> Post([FromBody] UserAddDto user)
         {
             var result = await this.userService.SaveUser(user);
 
@@ -63,7 +61,7 @@ namespace Portfolio.Api.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut]
-        public async Task<ActionResult> Put(UserUpdateDto user)
+        public async Task<ActionResult> Put([FromBody] UserUpdateDto user)
         {
                 var result = await this.userService.ModifyUser(user);
 
@@ -76,10 +74,5 @@ namespace Portfolio.Api.Controllers
             
         }
 
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

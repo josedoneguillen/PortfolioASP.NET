@@ -7,6 +7,14 @@ namespace Portfolio.Infrastructure.Configurations
     {
         public static void AddConfigurationContentEntity(this ModelBuilder modelBuilder)
         {
+            // Categories
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.ToTable("Categories");
+                entity.Property(e => e.Name);
+                entity.Property(e => e.Description);
+
+            });
 
             // Certification
             modelBuilder.Entity<Certification>(entity =>
@@ -19,7 +27,7 @@ namespace Portfolio.Infrastructure.Configurations
             // Certification Categories
             modelBuilder.Entity<CertificationCategory>(entity =>
             {
-                entity.ToTable("CertificationCategories");
+                entity.ToTable("CertificationsCategories");
                 entity.HasMany(c => c.Certifications);
 
             });
@@ -35,7 +43,7 @@ namespace Portfolio.Infrastructure.Configurations
             // Project Categories
             modelBuilder.Entity<ProjectCategory>(entity =>
             {
-                entity.ToTable("ProjectCategories");
+                entity.ToTable("ProjectsCategories");
                 entity.HasMany(c => c.Projects);
 
             });

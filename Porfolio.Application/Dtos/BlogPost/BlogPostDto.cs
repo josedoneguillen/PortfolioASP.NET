@@ -9,7 +9,6 @@ namespace Portfolio.Application.Dtos.BlogPost
         public string Slug { get; set; }
         public string Content { get; set; }
         public string ImageUrl { get; set; }
-        public bool IsPublished { get; set; }
         public DateTime PublishDate { get; set; }
     }
 }

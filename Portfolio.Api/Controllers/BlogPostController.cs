@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Portfolio.Infrastructure.Interfaces;
+using Portfolio.Application.Contract;
+using Portfolio.Application.Dtos.BlogPost;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,44 +10,69 @@ namespace Portfolio.Api.Controllers
     [ApiController]
     public class BlogPostController : ControllerBase
     {
-        private readonly IBlogPostRepository blogPostRepository;
+        private readonly IBlogPostService blogPostService;
 
-        public BlogPostController(IBlogPostRepository blogPostRepository)
+        public BlogPostController(IBlogPostService blogPostService)
         {
-            this.blogPostRepository = blogPostRepository;
+            this.blogPostService = blogPostService;
         }
 
-        // GET: api/<UserController>
+        // GET: api/<BlogPostController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var roles = await this.blogPostRepository.GetAll();
-            return Ok(roles);
+            var result = await this.blogPostService.Get();
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // GET api/<RolController>/5
+        // GET api/<BlogPostController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            return "value";
+            var result = await this.blogPostService.GetById(id);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // POST api/<RolController>
+        // POST api/<BlogPostController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] BlogPostAddDto blogPost)
         {
+            var result = await this.blogPostService.SaveBlogPost(blogPost);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // PUT api/<RolController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/<BlogPostController>/5
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] BlogPostUpdateDto blogPost)
         {
+            var result = await this.blogPostService.ModifyBlogPost(blogPost);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
+
         }
 
-        // DELETE api/<RolController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

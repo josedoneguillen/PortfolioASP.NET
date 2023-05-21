@@ -18,6 +18,7 @@ namespace Portfolio.IOC.Dependencies
 
             #region "Services"
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRolService, RolService>();
             #endregion
         }
     }

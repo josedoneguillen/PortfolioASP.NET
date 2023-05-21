@@ -1,6 +1,5 @@
 ﻿using Portfolio.Application.Core;
 using Portfolio.Application.Dtos.Rol;
-using Portfolio.Application.Responses;
 using System.Threading.Tasks;
 
 namespace Portfolio.Application.Contract
@@ -9,7 +8,7 @@ namespace Portfolio.Application.Contract
     {
         Task<ServiceResult> Get();
         Task<ServiceResult> GetById(int Id);
-        Task<RolAddResponse> SaveRol(RolAddDto rolAddDto);
-        Task<RolAddResponse> ModifyRol(RolUpdateDto rolUpdateDto);
+        Task<ServiceResult> SaveRol(RolAddDto rolAddDto);
+        Task<ServiceResult> ModifyRol(RolUpdateDto rolUpdateDto);
     }
 }

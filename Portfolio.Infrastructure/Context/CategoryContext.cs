@@ -5,6 +5,6 @@ namespace Portfolio.Infrastructure.Context
 {
     public partial class ApplicationDbContext
     {
-        public DbSet<CertificationCategory> CertificationsCategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

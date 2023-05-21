@@ -19,11 +19,6 @@ namespace Portfolio.Application.Services
             this.certificationRepository = certificationRepository;
             this.logger = logger;
         }
-        public ServiceResult save()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Task<ServiceResult> Get()
         {
             throw new System.NotImplementedException();
@@ -33,15 +28,14 @@ namespace Portfolio.Application.Services
         {
             throw new System.NotImplementedException();
         }
-
-        Task<CertificationAddResponse> ICertificationService.ModifyCertification(CertificationUpdateDto certificationUpdateDto)
+        public Task<ServiceResult> SaveCertification(CertificationAddDto certificationAddDto)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        Task<CertificationAddResponse> ICertificationService.SaveCertification(CertificationAddDto certificationAddDto)
+        public Task<ServiceResult> ModifyCertification(CertificationUpdateDto certificationUpdateDto)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
