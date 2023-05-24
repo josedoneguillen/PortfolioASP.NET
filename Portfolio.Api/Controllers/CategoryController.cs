@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Portfolio.Application.Contract;
-using Portfolio.Application.Dtos.Certification;
+using Portfolio.Application.Dtos.Category;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,20 +8,20 @@ namespace Portfolio.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CertificationController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private readonly ICertificationService certificationService;
+        private readonly ICategoryService categoryService;
 
-        public CertificationController(ICertificationService certificationService)
+        public CategoryController(ICategoryService categoryService)
         {
-            this.certificationService = certificationService;
+            this.categoryService = categoryService;
         }
 
-        // GET: api/<CertificationController>
+        // GET: api/<CategoryController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = await this.certificationService.Get();
+            var result = await this.categoryService.Get();
 
             if (!result.Success)
             {
@@ -31,11 +31,11 @@ namespace Portfolio.Api.Controllers
             return Ok(result);
         }
 
-        // GET api/<CertificationController>/5
+        // GET api/<CategoryController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var result = await this.certificationService.GetById(id);
+            var result = await this.categoryService.GetById(id);
 
             if (!result.Success)
             {
@@ -45,11 +45,11 @@ namespace Portfolio.Api.Controllers
             return Ok(result);
         }
 
-        // POST api/<CertificationController>
+        // POST api/<CategoryController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CertificationAddDto certification)
+        public async Task<ActionResult> Post([FromBody] CategoryAddDto category)
         {
-            var result = await this.certificationService.SaveCertification(certification);
+            var result = await this.categoryService.SaveCategory(category);
 
             if (!result.Success)
             {
@@ -59,11 +59,11 @@ namespace Portfolio.Api.Controllers
             return Ok(result);
         }
 
-        // PUT api/<CertificationController>/5
+        // PUT api/<CategoryController>/5
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] CertificationUpdateDto certification)
+        public async Task<ActionResult> Put([FromBody] CategoryUpdateDto category)
         {
-            var result = await this.certificationService.ModifyCertification(certification);
+            var result = await this.categoryService.ModifyCategory(category);
 
             if (!result.Success)
             {

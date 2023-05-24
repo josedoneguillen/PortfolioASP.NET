@@ -19,7 +19,7 @@ namespace Portfolio.Application.Extensions
                 EndDate = experienceAddDto.EndDate,
                 IdUserCreate = experienceAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = true,
+                IsPublished = experienceAddDto.IsPublished.HasValue ? experienceAddDto.IsPublished.Value : true,
                 IsDeleted = false
             };
         }

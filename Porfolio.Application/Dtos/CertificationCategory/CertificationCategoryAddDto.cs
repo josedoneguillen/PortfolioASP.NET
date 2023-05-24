@@ -1,7 +1,8 @@
 ﻿
 namespace Portfolio.Application.Dtos.CertificationCategory
 {
-    public class CertificationCategoryAddDto : CertificationCategoryDto
+    public class CertificationCategoryAddDto
     {
+        public int CategoryId { get; set; }
     }
 }

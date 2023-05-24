@@ -31,6 +31,8 @@ namespace Portfolio.IOC.Dependencies
             #endregion
 
             #region "Services"
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICertificationService, CertificationService>();
             services.AddTransient<IBlogPostService, BlogPostService>();
             services.AddTransient<IContactFormService, ContactFormService>();
             services.AddTransient<IExperienceService, ExperienceService>();

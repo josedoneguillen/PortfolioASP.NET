@@ -24,7 +24,7 @@ namespace Portfolio.Application.Extensions
                 RolId = userAddDto.RolId,
                 IdUserCreate = userAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = true,
+                IsPublished = userAddDto.IsPublished.HasValue ? userAddDto.IsPublished.Value : true,
                 IsDeleted = false
             };
         }

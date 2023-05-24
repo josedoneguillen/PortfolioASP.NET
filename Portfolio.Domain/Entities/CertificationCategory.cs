@@ -7,6 +7,5 @@ namespace Portfolio.Domain.Entities
     {
         public int CertificationId { get; set; }
         public int CategoryId { get; set; }
-        public ICollection<Certification> Certifications { get; set; }
     }
 }

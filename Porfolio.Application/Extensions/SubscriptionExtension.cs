@@ -15,7 +15,7 @@ namespace Portfolio.Application.Extensions
                 OptOut = false,
                 IdUserCreate = 0,
                 CreationDate = DateTime.Now,
-                IsPublished = true,
+                IsPublished = subscriptionAddDto.IsPublished.HasValue ? subscriptionAddDto.IsPublished.Value : true,
                 IsDeleted = false
             };
         }

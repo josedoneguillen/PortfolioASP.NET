@@ -17,7 +17,7 @@ namespace Portfolio.Application.Extensions
                 LogoUrl = organizationAddDto.LogoUrl,
                 IdUserCreate = organizationAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = true,
+                IsPublished = organizationAddDto.IsPublished.HasValue ? organizationAddDto.IsPublished.Value : true,
                 IsDeleted = false
             };
         }

@@ -7,6 +7,5 @@ namespace Portfolio.Domain.Entities
     {
         public int ProjectId { get; set; }
         public int CategoryId { get; set; }
-        public ICollection<Project> Projects { get; set; }
     }
 }
