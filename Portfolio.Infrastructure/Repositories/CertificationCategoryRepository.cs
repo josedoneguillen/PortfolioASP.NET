@@ -68,6 +68,20 @@ namespace Portfolio.Infrastructure.Repositories
 
         }
 
+        public async override Task Save(CertificationCategory[] entities)
+        {
+            try
+            {
+                await base.Save(entities);
+                await base.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError("Ocurrio un error guardando las categoria de certificaciones ", ex.ToString());
+            }
+
+        }
+
         public async override Task Update(CertificationCategory entities)
         {
             try
@@ -81,6 +95,23 @@ namespace Portfolio.Infrastructure.Repositories
             }
 
         }
+
+        public async override void DeleteById(int certificationId)
+        {
+            try
+            {
+                List<CertificationCategory> certificationCategories = await this._context.CertificationsCategories.Where(cc => cc.CertificationId == certificationId).ToListAsync();
+                base.Delete(certificationCategories.ToArray());
+                await base.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError("Ocurrio un error eliminando las categorias de certificaciones ", ex.ToString());
+            }
+
+        }
+
+
     }
 }
 

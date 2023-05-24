@@ -1,6 +1,5 @@
 ﻿using Portfolio.Application.Core;
 using Portfolio.Application.Dtos.CertificationCategory;
-using Portfolio.Application.Responses;
 using System.Threading.Tasks;
 
 namespace Portfolio.Application.Contract

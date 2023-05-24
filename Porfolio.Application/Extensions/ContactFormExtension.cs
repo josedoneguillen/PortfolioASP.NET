@@ -17,7 +17,7 @@ namespace Portfolio.Application.Extensions
                 Message = contactFormAddDto.Message,
                 IdUserCreate = contactFormAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = true,
+                IsPublished = contactFormAddDto.IsPublished.HasValue ? contactFormAddDto.IsPublished.Value : true,
                 IsDeleted = false
             };
         }

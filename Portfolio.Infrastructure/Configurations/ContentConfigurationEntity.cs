@@ -20,7 +20,7 @@ namespace Portfolio.Infrastructure.Configurations
             modelBuilder.Entity<Certification>(entity =>
             {
                 entity.ToTable("Certifications");
-                entity.HasMany(c => c.Categories);
+                entity.Property(c => c.Title);
 
             });
 
@@ -28,7 +28,7 @@ namespace Portfolio.Infrastructure.Configurations
             modelBuilder.Entity<CertificationCategory>(entity =>
             {
                 entity.ToTable("CertificationsCategories");
-                entity.HasMany(c => c.Certifications);
+                entity.Property(c => c.CertificationId);
 
             });
 
@@ -44,7 +44,7 @@ namespace Portfolio.Infrastructure.Configurations
             modelBuilder.Entity<ProjectCategory>(entity =>
             {
                 entity.ToTable("ProjectsCategories");
-                entity.HasMany(c => c.Projects);
+                entity.Property(c => c.ProjectId);
 
             });
 

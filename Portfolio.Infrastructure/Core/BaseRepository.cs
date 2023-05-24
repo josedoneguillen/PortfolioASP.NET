@@ -62,5 +62,19 @@ namespace Portfolio.Infrastructure.Core
         {
             this.myDbSet.UpdateRange(entities);
         }
+
+        public virtual void Delete(TEntity entity)
+        {
+            this.myDbSet.Remove(entity);
+        }
+
+        public virtual void Delete(params TEntity[] entities)
+        {
+            this.myDbSet.RemoveRange(entities);
+        }
+
+        public virtual void DeleteById(int id)
+        {
+        }
     }
 }

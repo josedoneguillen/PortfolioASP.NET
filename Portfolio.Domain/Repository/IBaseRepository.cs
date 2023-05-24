@@ -15,6 +15,9 @@ namespace Portfolio.Domain.Repository
         Task Save(params TEntity[] entities);
         Task Update(TEntity entity);
         Task Update(params TEntity[] entities);
+        void Delete(TEntity entity);
+        void Delete(params TEntity[] entities);
+        void DeleteById(int id);
         Task<bool> Exist(Expression<Func<TEntity, bool>> filter);
         Task SaveChanges();
     }

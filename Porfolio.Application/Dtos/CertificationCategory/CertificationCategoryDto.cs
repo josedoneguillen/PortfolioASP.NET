@@ -8,6 +8,6 @@ namespace Portfolio.Application.Dtos.CertificationCategory
     {
         public int CertificationId { get; set; }
         public int CategoryId { get; set; }
-        public virtual ICollection<CertificationDto>? Certifications { get; set; }
+
     }
 }
