@@ -8,6 +8,5 @@ namespace Portfolio.Application.Dtos.ProjectCategory
     {
         public int ProjectId { get; set; }
         public int CategoryId { get; set; }
-        public ICollection<ProjectDto>? Projects { get; set; }
     }
 }
