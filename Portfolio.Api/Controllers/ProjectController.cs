@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Portfolio.Infrastructure.Interfaces;
+using Portfolio.Application.Contract;
+using Portfolio.Application.Dtos.Project;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,44 +10,69 @@ namespace Portfolio.Api.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
-        private readonly IProjectRepository projectRepository;
+        private readonly IProjectService projectService;
 
-        public ProjectController(IProjectRepository projectRepository)
+        public ProjectController(IProjectService projectService)
         {
-            this.projectRepository = projectRepository;
+            this.projectService = projectService;
         }
 
-        // GET: api/<UserController>
+        // GET: api/<ProjectController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var roles = await this.projectRepository.GetAll();
-            return Ok(roles);
+            var result = await this.projectService.Get();
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // GET api/<RolController>/5
+        // GET api/<ProjectController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            return "value";
+            var result = await this.projectService.GetById(id);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // POST api/<RolController>
+        // POST api/<ProjectController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] ProjectAddDto project)
         {
+            var result = await this.projectService.SaveProject(project);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
-        // PUT api/<RolController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/<ProjectController>/5
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] ProjectUpdateDto project)
         {
+            var result = await this.projectService.ModifyProject(project);
+
+            if (!result.Success)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
+
         }
 
-        // DELETE api/<RolController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

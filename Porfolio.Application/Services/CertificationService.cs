@@ -168,33 +168,6 @@ namespace Portfolio.Application.Services
             return this.result;
         }
 
-        private async Task<List<Models.CategoryGetModel>> getCategories(int certificationId)
-        {
-            List<Models.CategoryGetModel>? categories = new List<Models.CategoryGetModel>();
-            try
-            {
-
-                categories = (from certificationCategory in (await this.certificationCategoryRepository.GetAll())
-                              join category in (await this.categoryRepository.GetAll()) on certificationCategory.CategoryId equals category.Id
-                              where certificationCategory.CertificationId == certificationId
-                              select new Models.CategoryGetModel
-                                  {
-                                      Id = category.Id,
-                                      Name = category.Name,
-                                      Description = category.Description
-                                  }
-
-                         ).ToList();
-            }
-            catch (Exception ex)
-            {
-                categories = null;
-                this.logger.Log(LogLevel.Error, "Error obteniendo las categorias de los certificados", ex.ToString());
-            }
-
-            return categories;
-        }
-
         private async Task<List<Models.CertificationGetModel>> getCertifications(int? Id = null)
         {
             List<Models.CertificationGetModel>? certifications = new List<Models.CertificationGetModel>();
@@ -220,6 +193,33 @@ namespace Portfolio.Application.Services
             }
 
             return certifications;
+        }
+
+        private async Task<List<Models.CategoryGetModel>> getCategories(int certificationId)
+        {
+            List<Models.CategoryGetModel>? categories = new List<Models.CategoryGetModel>();
+            try
+            {
+
+                categories = (from certificationCategory in (await this.certificationCategoryRepository.GetAll())
+                              join category in (await this.categoryRepository.GetAll()) on certificationCategory.CategoryId equals category.Id
+                              where certificationCategory.CertificationId == certificationId
+                              select new Models.CategoryGetModel
+                              {
+                                  Id = category.Id,
+                                  Name = category.Name,
+                                  Description = category.Description
+                              }
+
+                         ).ToList();
+            }
+            catch (Exception ex)
+            {
+                categories = null;
+                this.logger.Log(LogLevel.Error, "Error obteniendo las categorias de los certificados", ex.ToString());
+            }
+
+            return categories;
         }
 
         private async Task AddCategories(List<CertificationCategoryAddDto> categories, int certificationId, int idUserCreate)

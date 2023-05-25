@@ -32,7 +32,7 @@ namespace Portfolio.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Error obteniendo las categorias de proyectos", ex.ToString());
+                this._logger.LogError("Error obteniendo las certificaciones", ex.ToString());
             }
 
             return projectCategories;
@@ -48,7 +48,7 @@ namespace Portfolio.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Error obteniendo las categorias de proyectos", ex.ToString());
+                this._logger.LogError("Error obteniendo las categorias de certificaciones", ex.ToString());
             }
 
             return projectCategory;
@@ -63,7 +63,21 @@ namespace Portfolio.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Ocurrio un error guardando la categoria del proyecto ", ex.ToString());
+                this._logger.LogError("Ocurrio un error guardando la categoria de certificaciones", ex.ToString());
+            }
+
+        }
+
+        public async override Task Save(ProjectCategory[] entities)
+        {
+            try
+            {
+                await base.Save(entities);
+                await base.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError("Ocurrio un error guardando las categoria de certificaciones ", ex.ToString());
             }
 
         }
@@ -77,10 +91,27 @@ namespace Portfolio.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Ocurrio un error modificando la categoria del proyecto ", ex.ToString());
+                this._logger.LogError("Ocurrio un error modificando la categoria de certificaciones ", ex.ToString());
             }
 
         }
+
+        public async override void DeleteById(int projectId)
+        {
+            try
+            {
+                List<ProjectCategory> projectCategories = await this._context.ProjectsCategories.Where(cc => cc.ProjectId == projectId).ToListAsync();
+                base.Delete(projectCategories.ToArray());
+                await base.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError("Ocurrio un error eliminando las categorias de certificaciones ", ex.ToString());
+            }
+
+        }
+
+
     }
 }
 
