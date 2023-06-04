@@ -73,6 +73,28 @@ namespace Portfolio.Application.Extensions
 
             return projectCategories;
         }
+
+        public static ProjectGetModel CreateProjectGetModelFull(this Project project)
+        {
+            return new Models.ProjectGetModel()
+            {
+                Id = project.Id,
+                Title = project.Title,
+                Slug = project.Slug,
+                Description = project.Description,
+                ImageUrl = project.ImageUrl,
+                GithubUrl = project.GithubUrl,
+                DemoUrl = project.DemoUrl,
+                OrganizationId = project.OrganizationId,
+                StartDate = project.StartDate,
+                EndDate = project.EndDate,
+                IsFeatured = project.IsFeatured,
+                IsOngoing = project.IsOngoing,
+                Categories = new List<CategoryGetModel>()
+            };
+
+        }
+
         public static ProjectGetModel CreateProjectGetModel(this Project project, Organization organization)
         {
             return new Models.ProjectGetModel()
@@ -89,8 +111,7 @@ namespace Portfolio.Application.Extensions
                 StartDate = project.StartDate,
                 EndDate = project.EndDate,
                 IsFeatured = project.IsFeatured,
-                IsOngoing = project.IsOngoing,
-                Categories = new List<CategoryGetModel>()
+                IsOngoing = project.IsOngoing
             };
 
         }

@@ -22,6 +22,12 @@ namespace Portfolio.Infrastructure.Repositories
             this._logger = logger;
         }
 
+        public async Task<Project> GetProjectCategories(int projectId)
+        {
+            return this._context.Projects.Include(cd => cd.ProjectCategories)
+                .FirstOrDefault(cd => cd.Id == projectId);
+        }
+
         public async override Task<IEnumerable<Project>> GetAll()
         {
             List<Project> projects = new List<Project>();

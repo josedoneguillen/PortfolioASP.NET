@@ -36,7 +36,7 @@ namespace Portfolio.Infrastructure.Configurations
             modelBuilder.Entity<Project>(entity =>
             {
                 entity.ToTable("Projects");
-                entity.HasMany(c => c.Categories);
+                entity.Property(c => c.Title);
 
             });
 

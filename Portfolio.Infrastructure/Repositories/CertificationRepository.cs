@@ -8,7 +8,7 @@ using Portfolio.Domain.Entities;
 using Portfolio.Infrastructure.Context;
 using Portfolio.Infrastructure.Core;
 using Portfolio.Infrastructure.Interfaces;
-
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Portfolio.Infrastructure.Repositories
 {
@@ -20,6 +20,13 @@ namespace Portfolio.Infrastructure.Repositories
         {
             this._context = context;
             this._logger = logger;
+        }
+
+        public async Task<Certification> GetCertificationCategory(int certificationId)
+        {
+
+            return this._context.Certifications.Include(cd => cd.CertificationCategories)
+                                        .FirstOrDefault(cd => cd.Id == certificationId);
         }
 
         public async override Task<IEnumerable<Certification>> GetAll()
