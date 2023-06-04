@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Portfolio.Application.Dtos.Certification;
 using Portfolio.Application.Dtos.CertificationCategory;
 using Portfolio.Application.Models;
@@ -67,6 +68,24 @@ namespace Portfolio.Application.Extensions
 
             return certificationCategories;
         }
+        public static CertificationGetModel CreateCertificationGetModelFull(this Certification certification)
+        {
+            return new Models.CertificationGetModel()
+            {
+                Id = certification.Id,
+                Title = certification.Title,
+                OrganizationId = certification.Id,
+                DateIssued = certification.DateIssued,
+                CredentialId = certification.CredentialId,
+                CredentialUrl = certification.CredentialUrl,
+                Description = certification.Description,
+                ImageUrl = certification.ImageUrl,
+                FileUrl = certification.FileUrl,
+                Categories = new List<CategoryGetModel>()
+        };
+
+        }
+
         public static CertificationGetModel CreateCertificationGetModel(this Certification certification, Organization organization)
         {
             return new Models.CertificationGetModel()
@@ -80,9 +99,8 @@ namespace Portfolio.Application.Extensions
                 CredentialUrl = certification.CredentialUrl,
                 Description = certification.Description,
                 ImageUrl = certification.ImageUrl,
-                FileUrl = certification.FileUrl,
-                Categories = new List<CategoryGetModel>()
-        };
+                FileUrl = certification.FileUrl
+            };
 
         }
     }

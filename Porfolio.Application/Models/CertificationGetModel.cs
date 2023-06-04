@@ -6,6 +6,10 @@ namespace Portfolio.Application.Models
 {
     public class CertificationGetModel
     {
+        public CertificationGetModel() 
+        {
+            this.Categories = new List<CategoryGetModel>();
+        }
         public int Id { set; get; }
         public string Title { get; set; }
         public int OrganizationId { get; set; }

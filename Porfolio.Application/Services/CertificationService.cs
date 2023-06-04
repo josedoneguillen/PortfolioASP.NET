@@ -10,6 +10,7 @@ using Portfolio.Domain.Entities;
 using Portfolio.Application.Extensions;
 using System.Collections.Generic;
 using Portfolio.Application.Dtos.CertificationCategory;
+using Portfolio.Application.Models;
 
 namespace Portfolio.Application.Services
 {
@@ -41,7 +42,11 @@ namespace Portfolio.Application.Services
         {
             try
             {
-                this.result.Data = await this.getCertifications();
+
+                this.result.Data = (from certification in (await this.certificationRepository.GetAll())
+                                  join organization in (await this.organizationRepository.GetAll()) on certification.OrganizationId equals organization.Id
+                                  select certification.CreateCertificationGetModel(organization)
+                             ).ToList();
             }
             catch (Exception ex)
             {
@@ -56,10 +61,32 @@ namespace Portfolio.Application.Services
 
         public async Task<ServiceResult> GetById(int Id)
         {
-            try
+           try
             {
-                this.result.Data = (await this.getCertifications(Id)).FirstOrDefault();
-            }
+
+                Certification certification = await this.certificationRepository.GetCertificationCategory(Id);
+
+                CertificationGetModel cert = certification.CreateCertificationGetModelFull();
+
+                // Get Organization
+                cert.Organization = (from o in (await this.organizationRepository.GetAll())
+                                     where o.Id == cert.OrganizationId
+                                     select o.Name
+                                     ).FirstOrDefault().ToString();
+
+                // Get Categories
+                cert.Categories = (from ca in (await this.categoryRepository.GetAll())
+                              join cal in (certification.CertificationCategories) on ca.Id equals cal.CertificationId
+                              select new Models.CategoryGetModel()
+                              {
+                                  Id = ca.Id,
+                                  Name = ca.Name,
+                                  Description = ca.Description
+                              }).ToList();
+
+                this.result.Data = cert;
+
+           }
             catch (Exception ex)
             {
                 // Send Notification
@@ -167,61 +194,6 @@ namespace Portfolio.Application.Services
 
             return this.result;
         }
-
-        private async Task<List<Models.CertificationGetModel>> getCertifications(int? Id = null)
-        {
-            List<Models.CertificationGetModel>? certifications = new List<Models.CertificationGetModel>();
-            try
-            {
-
-                certifications = (from certification in (await this.certificationRepository.GetAll())
-                         join organization in (await this.organizationRepository.GetAll()) on certification.OrganizationId equals organization.Id
-                         where certification.Id == Id || !Id.HasValue
-                         select certification.CreateCertificationGetModel(organization)).ToList();
-
-
-                foreach (Models.CertificationGetModel c in certifications)
-                {
-                    List<Models.CategoryGetModel> categories = await this.getCategories(c.Id);
-                    c.Categories.AddRange(categories);
-                }
-            }
-            catch (Exception ex)
-            {
-                certifications = null;
-                this.logger.Log(LogLevel.Error, "Error obteniendo los certificados", ex.ToString());
-            }
-
-            return certifications;
-        }
-
-        private async Task<List<Models.CategoryGetModel>> getCategories(int certificationId)
-        {
-            List<Models.CategoryGetModel>? categories = new List<Models.CategoryGetModel>();
-            try
-            {
-
-                categories = (from certificationCategory in (await this.certificationCategoryRepository.GetAll())
-                              join category in (await this.categoryRepository.GetAll()) on certificationCategory.CategoryId equals category.Id
-                              where certificationCategory.CertificationId == certificationId
-                              select new Models.CategoryGetModel
-                              {
-                                  Id = category.Id,
-                                  Name = category.Name,
-                                  Description = category.Description
-                              }
-
-                         ).ToList();
-            }
-            catch (Exception ex)
-            {
-                categories = null;
-                this.logger.Log(LogLevel.Error, "Error obteniendo las categorias de los certificados", ex.ToString());
-            }
-
-            return categories;
-        }
-
         private async Task AddCategories(List<CertificationCategoryAddDto> categories, int certificationId, int idUserCreate)
         {
             if (categories != null)

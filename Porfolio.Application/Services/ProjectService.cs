@@ -10,6 +10,7 @@ using Portfolio.Domain.Entities;
 using Portfolio.Application.Extensions;
 using System.Collections.Generic;
 using Portfolio.Application.Dtos.ProjectCategory;
+using Portfolio.Application.Models;
 
 namespace Portfolio.Application.Services
 {
@@ -41,7 +42,9 @@ namespace Portfolio.Application.Services
         {
             try
             {
-                this.result.Data = await this.getProjects();
+                this.result.Data = (from project in (await this.projectRepository.GetAll())
+                                    join organization in (await this.organizationRepository.GetAll()) on project.OrganizationId equals organization.Id
+                                    select project.CreateProjectGetModel(organization)).ToList();
             }
             catch (Exception ex)
             {
@@ -58,7 +61,27 @@ namespace Portfolio.Application.Services
         {
             try
             {
-                this.result.Data = (await this.getProjects(Id)).FirstOrDefault();
+                Project project = await this.projectRepository.GetProjectCategories(Id);
+                ProjectGetModel pro = project.CreateProjectGetModelFull();
+
+                // Get Project Organization
+                pro.Organization = (from o in (await this.organizationRepository.GetAll())
+                                    where o.Id == pro.OrganizationId
+                                    select o.Name
+                                    ).FirstOrDefault().ToString();
+
+               // Get project categories
+               pro.Categories = (from ca in (await this.categoryRepository.GetAll())
+                                 join cal in (project.ProjectCategories) on ca.Id equals cal.CategoryId
+                                 select new Models.CategoryGetModel()
+                                 {
+                                     Id = ca.Id,
+                                     Name = ca.Name,
+                                     Description = ca.Description
+                                 }).ToList();
+
+                this.result.Data = pro;
+
             }
             catch (Exception ex)
             {
@@ -160,60 +183,6 @@ namespace Portfolio.Application.Services
             }
 
             return this.result;
-        }
-
-        private async Task<List<Models.ProjectGetModel>> getProjects(int? Id = null)
-        {
-            List<Models.ProjectGetModel>? projects = new List<Models.ProjectGetModel>();
-            try
-            {
-
-                projects = (from project in (await this.projectRepository.GetAll())
-                            join organization in (await this.organizationRepository.GetAll()) on project.OrganizationId equals organization.Id
-                            where project.Id == Id || !Id.HasValue
-                            select project.CreateProjectGetModel(organization)).ToList();
-
-
-                foreach (Models.ProjectGetModel c in projects)
-                {
-                    List<Models.CategoryGetModel> categories = await this.getCategories(c.Id);
-                    c.Categories.AddRange(categories);
-                }
-            }
-            catch (Exception ex)
-            {
-                projects = null;
-                this.logger.Log(LogLevel.Error, "Error obteniendo los proyectos", ex.ToString());
-            }
-
-            return projects;
-        }
-
-        private async Task<List<Models.CategoryGetModel>> getCategories(int projectId)
-        {
-            List<Models.CategoryGetModel>? categories = new List<Models.CategoryGetModel>();
-            try
-            {
-
-                categories = (from projectCategory in (await this.projectCategoryRepository.GetAll())
-                              join category in (await this.categoryRepository.GetAll()) on projectCategory.CategoryId equals category.Id
-                              where projectCategory.ProjectId == projectId
-                              select new Models.CategoryGetModel
-                              {
-                                  Id = category.Id,
-                                  Name = category.Name,
-                                  Description = category.Description
-                              }
-
-                         ).ToList();
-            }
-            catch (Exception ex)
-            {
-                categories = null;
-                this.logger.Log(LogLevel.Error, "Error obteniendo las categorias de los proyectos", ex.ToString());
-            }
-
-            return categories;
         }
 
         private async Task AddCategories(List<ProjectCategoryAddDto> categories, int projectId, int idUserCreate)
