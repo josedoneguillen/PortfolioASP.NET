@@ -1,8 +1,8 @@
-﻿namespace Portfolio.Web.Models.Response
+﻿namespace Portfolio.Web.Models.Responses
 {
     public class CoreResponseModel
     {
-        public object message { get; set; }
+        public string message { get; set; }
         public bool success { get; set; }
     }
 }
