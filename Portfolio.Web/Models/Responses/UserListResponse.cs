@@ -1,4 +1,4 @@
-﻿namespace Portfolio.Web.Models.Response
+﻿namespace Portfolio.Web.Models.Responses
 {
     public class UserListResponse : CoreResponseModel
     {
