@@ -1,7 +1,7 @@
 ﻿
 namespace Portfolio.Application.Models
 {
-    public class SubscriptionGetModel
+    public class SubscriptionGetModel : BaseGetModel
     {
         public int? Id { set; get; }
         public string Email { get; set; }

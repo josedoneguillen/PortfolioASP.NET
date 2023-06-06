@@ -1,6 +1,8 @@
 ﻿using System;
 using Portfolio.Application.Dtos.Rol;
+using Portfolio.Application.Dtos.Subscription;
 using Portfolio.Application.Models;
+using Portfolio.Domain.Entities;
 using Portfolio.Domain.Entities.Security;
 
 namespace Portfolio.Application.Extensions
@@ -15,7 +17,7 @@ namespace Portfolio.Application.Extensions
                 Description = rolAddDto.Description,
                 IdUserCreate = rolAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = rolAddDto.IsPublished.HasValue ? rolAddDto.IsPublished.Value : true,
+                IsPublished = rolAddDto.IsPublished,
                 IsDeleted = false
             };
         }
@@ -24,10 +26,11 @@ namespace Portfolio.Application.Extensions
             rol.Name = rolUpdateDto.Name ?? rol.Name;
             rol.Description = rolUpdateDto.Description ?? rol.Description;
             rol.IdUserModification = rolUpdateDto.IdUser;
-            rol.IsPublished = rolUpdateDto.IsPublished.HasValue ? rolUpdateDto.IsPublished.Value : rol.IsPublished;
+            rol.IdUserDelete = (rolUpdateDto.IsDeleted == true) ? rolUpdateDto.IdUser : 0;
+            rol.IsPublished = rolUpdateDto.IsPublished;
             rol.ModificationDate = DateTime.Now;
-            rol.IsDeleted = rolUpdateDto.IsDeleted.HasValue ? rolUpdateDto.IsDeleted.Value : rol.IsDeleted;
-            rol.DeletedDate = (rolUpdateDto.IsDeleted.HasValue && rolUpdateDto.IsDeleted == true) ? DateTime.Now : rol.DeletedDate;
+            rol.IsDeleted = rolUpdateDto.IsDeleted ? rolUpdateDto.IsDeleted : rol.IsDeleted;
+            rol.DeletedDate = (rolUpdateDto.IsDeleted == true) ? DateTime.Now : rol.DeletedDate;
 
             return rol;
         }
@@ -37,7 +40,9 @@ namespace Portfolio.Application.Extensions
             {
                 Id = rol.Id,
                 Name = rol.Name,
-                Description = rol.Description
+                Description = rol.Description,
+                IsPublished = rol.IsPublished,
+                IsDeleted = rol.IsDeleted
             };
 
         }

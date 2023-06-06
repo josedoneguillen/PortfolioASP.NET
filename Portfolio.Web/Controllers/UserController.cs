@@ -116,27 +116,35 @@ namespace Portfolio.Web.Controllers
         // GET: UserController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-
-            var userGet = await this.userApiService.GetUser(id);
-
-            UserSaveRequest userSave = new UserSaveRequest()
+            try
             {
-                Id = userGet.Data.Id,
-                FirstName = userGet.Data.FirstName,
-                LastName = userGet.Data.LastName,
-                Email = userGet.Data.Email,
-                PhoneNumber = userGet.Data.PhoneNumber,
-                Description = userGet.Data.Description,
-                Image = userGet.Data.Image,
-                Position = userGet.Data.Position,
-                RolId = userGet.Data.RolId
-            };
+                var userGet = await this.userApiService.GetUser(id);
+
+                UserSaveRequest userSave = new UserSaveRequest()
+                {
+                    Id = userGet.Data.Id,
+                    IsPublished = userGet.Data.IsPublished,
+                    IsDeleted = userGet.Data.IsDeleted,
+                    FirstName = userGet.Data.FirstName,
+                    LastName = userGet.Data.LastName,
+                    Email = userGet.Data.Email,
+                    PhoneNumber = userGet.Data.PhoneNumber,
+                    Description = userGet.Data.Description,
+                    Image = userGet.Data.Image,
+                    Position = userGet.Data.Position,
+                    RolId = userGet.Data.RolId
+                };
 
 
-            return View(userSave);
+                return View(userSave);
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
-        // POST: UserController/Edit/5
+        // POST: UserController/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(UserSaveRequest userSave)
@@ -155,6 +163,28 @@ namespace Portfolio.Web.Controllers
         }
 
         // GET: UserController/Delete/5
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+
+                UserSaveRequest userSave = new UserSaveRequest()
+                {
+                    Id = id,
+                    IsDeleted = true,
+                    IdUser = 1
+                };
+
+                await this.userApiService.UpdateUser(userSave);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
     }
 }

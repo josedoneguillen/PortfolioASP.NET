@@ -1,7 +1,9 @@
 ﻿using System;
 using Portfolio.Application.Dtos.ContactForm;
+using Portfolio.Application.Dtos.Subscription;
 using Portfolio.Application.Models;
 using Portfolio.Domain.Entities;
+using Portfolio.Domain.Entities.Security;
 
 namespace Portfolio.Application.Extensions
 {
@@ -17,7 +19,7 @@ namespace Portfolio.Application.Extensions
                 Message = contactFormAddDto.Message,
                 IdUserCreate = contactFormAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = contactFormAddDto.IsPublished.HasValue ? contactFormAddDto.IsPublished.Value : true,
+                IsPublished = contactFormAddDto.IsPublished,
                 IsDeleted = false
             };
         }
@@ -28,10 +30,11 @@ namespace Portfolio.Application.Extensions
             contactForm.Subject = contactFormUpdateDto.Subject ?? contactForm.Subject;
             contactForm.Message = contactFormUpdateDto.Message ?? contactForm.Message;
             contactForm.IdUserModification = contactFormUpdateDto.IdUser;
-            contactForm.IsPublished = contactFormUpdateDto.IsPublished.HasValue ? contactFormUpdateDto.IsPublished.Value : contactForm.IsPublished;
+            contactForm.IdUserDelete = (contactFormUpdateDto.IsDeleted == true) ? contactFormUpdateDto.IdUser : 0;
+            contactForm.IsPublished = contactFormUpdateDto.IsPublished;
             contactForm.ModificationDate = DateTime.Now;
-            contactForm.IsDeleted = contactFormUpdateDto.IsDeleted.HasValue ? contactFormUpdateDto.IsDeleted.Value : contactForm.IsDeleted;
-            contactForm.DeletedDate = (contactFormUpdateDto.IsDeleted.HasValue && contactFormUpdateDto.IsDeleted == true) ? DateTime.Now : contactForm.DeletedDate;
+            contactForm.IsDeleted = contactFormUpdateDto.IsDeleted ? contactFormUpdateDto.IsDeleted : contactForm.IsDeleted;
+            contactForm.DeletedDate = (contactFormUpdateDto.IsDeleted == true) ? DateTime.Now : contactForm.DeletedDate;
 
             return contactForm;
         }
@@ -42,8 +45,10 @@ namespace Portfolio.Application.Extensions
                 Name = contactForm.Name,
                 Email = contactForm.Email,
                 Subject = contactForm.Subject,
-                Message = contactForm.Message
-        };
+                Message = contactForm.Message,
+                IsPublished = contactForm.IsPublished,
+                IsDeleted = contactForm.IsDeleted
+            };
 
         }
     }

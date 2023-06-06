@@ -4,7 +4,7 @@ using Portfolio.Domain.Entities;
 
 namespace Portfolio.Application.Models
 {
-    public class CertificationGetModel
+    public class CertificationGetModel : BaseGetModel
     {
         public CertificationGetModel() 
         {

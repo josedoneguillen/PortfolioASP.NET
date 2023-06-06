@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Portfolio.Application.Models
 {
-    public class ProjectGetModel
+    public class ProjectGetModel : BaseGetModel
     {
         public int Id { set; get; }
         public string Title { get; set; }

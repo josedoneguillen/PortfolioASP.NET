@@ -1,7 +1,7 @@
 ﻿
 namespace Portfolio.Application.Models
 {
-    public class UserGetModel
+    public class UserGetModel : BaseGetModel
     { 
         public int? Id { set; get; }
         public string? FirstName { set; get; }

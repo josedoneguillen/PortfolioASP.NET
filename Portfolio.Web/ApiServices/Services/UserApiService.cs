@@ -97,7 +97,7 @@ namespace Portfolio.Web.ApiServices.Services
             {
                 using (var httpClient = this.clientFactory.CreateClient())
                 {
-                    string url = $" {this.baseUrl}/User/SaveUser";
+                    string url = $" {this.baseUrl}/User";
 
 
                     StringContent request = new StringContent(JsonConvert.SerializeObject(userRequest), Encoding.UTF8, "application/json");
@@ -132,11 +132,11 @@ namespace Portfolio.Web.ApiServices.Services
             {
                 using (var httpClient = this.clientFactory.CreateClient())
                 {
-                    string url = $" {this.baseUrl}/User/UpdateUser";
+                    string url = $" {this.baseUrl}/User";
 
                     StringContent request = new StringContent(JsonConvert.SerializeObject(userRequest), Encoding.UTF8, "application/json");
 
-                    using (var response = await httpClient.PostAsync(url, request))
+                    using (var response = await httpClient.PutAsync(url, request))
                     {
                         if (response.IsSuccessStatusCode)
                         {

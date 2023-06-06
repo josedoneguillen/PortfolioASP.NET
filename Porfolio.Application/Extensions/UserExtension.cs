@@ -24,7 +24,7 @@ namespace Portfolio.Application.Extensions
                 RolId = userAddDto.RolId,
                 IdUserCreate = userAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = userAddDto.IsPublished.HasValue ? userAddDto.IsPublished.Value : true,
+                IsPublished = userAddDto.IsPublished,
                 IsDeleted = false
             };
         }
@@ -38,12 +38,13 @@ namespace Portfolio.Application.Extensions
             user.Description = userUpdateDto.Description ?? user.Description;
             user.Image = userUpdateDto.Image ?? user.Image;
             user.Position = userUpdateDto.Position ?? user.Position;
-            user.RolId = userUpdateDto.RolId.HasValue ? userUpdateDto.RolId.Value : user.RolId;
+            user.RolId = userUpdateDto.RolId == null? userUpdateDto.RolId.Value : user.RolId;
             user.IdUserModification = userUpdateDto.IdUser;
-            user.IsPublished = userUpdateDto.IsPublished.HasValue ? userUpdateDto.IsPublished.Value : user.IsPublished;
+            user.IdUserDelete = userUpdateDto.IsDeleted == true ? userUpdateDto.IdUser : user.IdUserDelete;
+            user.IsPublished = userUpdateDto.IsPublished;
             user.ModificationDate = DateTime.Now;
-            user.IsDeleted = userUpdateDto.IsDeleted.HasValue ? userUpdateDto.IsDeleted.Value : user.IsDeleted;
-            user.DeletedDate = (userUpdateDto.IsDeleted.HasValue && userUpdateDto.IsDeleted == true) ? DateTime.Now : user.DeletedDate;
+            user.IsDeleted = userUpdateDto.IsDeleted;
+            user.DeletedDate = (userUpdateDto.IsDeleted == true) ? DateTime.Now : user.DeletedDate;
 
             return user;
         }
@@ -60,7 +61,9 @@ namespace Portfolio.Application.Extensions
                 Image = user.Image,
                 Position = user.Position,
                 Rol = rol.Name,
-                RolId = user.RolId
+                RolId = user.RolId,
+                IsPublished = user.IsPublished, 
+                IsDeleted = user.IsDeleted
             };
 
         }

@@ -2,7 +2,7 @@
 
 namespace Portfolio.Application.Models
 {
-    public class BlogPostGetModel
+    public class BlogPostGetModel : BaseGetModel
     {
         public int? Id { set; get; }
         public string Title { get; set; }
