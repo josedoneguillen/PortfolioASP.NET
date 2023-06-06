@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Portfolio.Application.Dtos.Certification;
 using Portfolio.Application.Dtos.CertificationCategory;
+using Portfolio.Application.Dtos.Subscription;
 using Portfolio.Application.Models;
 using Portfolio.Domain.Entities;
+using Portfolio.Domain.Entities.Security;
 
 namespace Portfolio.Application.Extensions
 {
@@ -24,7 +26,7 @@ namespace Portfolio.Application.Extensions
                 FileUrl = certificationAddDto.FileUrl,
                 IdUserCreate = certificationAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = certificationAddDto.IsPublished.HasValue ? certificationAddDto.IsPublished.Value : true,
+                IsPublished = certificationAddDto.IsPublished,
                 IsDeleted = false
             };
         }
@@ -39,10 +41,11 @@ namespace Portfolio.Application.Extensions
             certification.ImageUrl = certificationUpdateDto.ImageUrl ?? certification.ImageUrl;
             certification.FileUrl = certificationUpdateDto.FileUrl ?? certification.FileUrl;
             certification.IdUserModification = certificationUpdateDto.IdUser;
-            certification.IsPublished = certificationUpdateDto.IsPublished.HasValue ? certificationUpdateDto.IsPublished.Value : certification.IsPublished;
+            certification.IdUserDelete = (certificationUpdateDto.IsDeleted == true) ? certificationUpdateDto.IdUser : 0;
+            certification.IsPublished = certificationUpdateDto.IsPublished;
             certification.ModificationDate = DateTime.Now;
-            certification.IsDeleted = certificationUpdateDto.IsDeleted.HasValue ? certificationUpdateDto.IsDeleted.Value : certification.IsDeleted;
-            certification.DeletedDate = (certificationUpdateDto.IsDeleted.HasValue && certificationUpdateDto.IsDeleted == true) ? DateTime.Now : certification.DeletedDate;
+            certification.IsDeleted = certificationUpdateDto.IsDeleted ? certificationUpdateDto.IsDeleted : certification.IsDeleted;
+            certification.DeletedDate = (certificationUpdateDto.IsDeleted == true) ? DateTime.Now : certification.DeletedDate;
 
             return certification;
         }
@@ -81,8 +84,10 @@ namespace Portfolio.Application.Extensions
                 Description = certification.Description,
                 ImageUrl = certification.ImageUrl,
                 FileUrl = certification.FileUrl,
-                Categories = new List<CategoryGetModel>()
-        };
+                Categories = new List<CategoryGetModel>(),
+                IsPublished = certification.IsPublished,
+                IsDeleted = certification.IsDeleted
+            };
 
         }
 
@@ -99,7 +104,9 @@ namespace Portfolio.Application.Extensions
                 CredentialUrl = certification.CredentialUrl,
                 Description = certification.Description,
                 ImageUrl = certification.ImageUrl,
-                FileUrl = certification.FileUrl
+                FileUrl = certification.FileUrl,
+                IsPublished = certification.IsPublished,
+                IsDeleted = certification.IsDeleted
             };
 
         }

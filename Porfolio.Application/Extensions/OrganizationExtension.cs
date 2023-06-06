@@ -1,7 +1,9 @@
 ﻿using System;
 using Portfolio.Application.Dtos.Organization;
+using Portfolio.Application.Dtos.Subscription;
 using Portfolio.Application.Models;
 using Portfolio.Domain.Entities;
+using Portfolio.Domain.Entities.Security;
 
 namespace Portfolio.Application.Extensions
 {
@@ -17,7 +19,7 @@ namespace Portfolio.Application.Extensions
                 LogoUrl = organizationAddDto.LogoUrl,
                 IdUserCreate = organizationAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = organizationAddDto.IsPublished.HasValue ? organizationAddDto.IsPublished.Value : true,
+                IsPublished = organizationAddDto.IsPublished,
                 IsDeleted = false
             };
         }
@@ -28,10 +30,11 @@ namespace Portfolio.Application.Extensions
             organization.Website = organizationUpdateDto.Website ?? organization.Website;
             organization.LogoUrl = organizationUpdateDto.LogoUrl != null ? organizationUpdateDto.LogoUrl : organization.LogoUrl;
             organization.IdUserModification = organizationUpdateDto.IdUser;
-            organization.IsPublished = organizationUpdateDto.IsPublished.HasValue ? organizationUpdateDto.IsPublished.Value : organization.IsPublished;
+            organization.IdUserDelete = (organizationUpdateDto.IsDeleted == true) ? organizationUpdateDto.IdUser : 0;
+            organization.IsPublished = organizationUpdateDto.IsPublished;
             organization.ModificationDate = DateTime.Now;
-            organization.IsDeleted = organizationUpdateDto.IsDeleted.HasValue ? organizationUpdateDto.IsDeleted.Value : organization.IsDeleted;
-            organization.DeletedDate = (organizationUpdateDto.IsDeleted.HasValue && organizationUpdateDto.IsDeleted == true) ? DateTime.Now : organization.DeletedDate;
+            organization.IsDeleted = organizationUpdateDto.IsDeleted ? organizationUpdateDto.IsDeleted : organization.IsDeleted;
+            organization.DeletedDate = (organizationUpdateDto.IsDeleted == true) ? DateTime.Now : organization.DeletedDate;
 
             return organization;
         }
@@ -43,6 +46,8 @@ namespace Portfolio.Application.Extensions
                 Description = organization.Description,
                 Website = organization.Website,
                 LogoUrl = organization.LogoUrl,
+                IsPublished = organization.IsPublished,
+                IsDeleted = organization.IsDeleted
             };
 
         }

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using Portfolio.Application.Dtos.Project;
 using Portfolio.Application.Dtos.ProjectCategory;
+using Portfolio.Application.Dtos.Subscription;
 using Portfolio.Application.Models;
 using Portfolio.Domain.Entities;
+using Portfolio.Domain.Entities.Security;
 
 namespace Portfolio.Application.Extensions
 {
@@ -26,7 +28,7 @@ namespace Portfolio.Application.Extensions
                 IsOngoing = projectAddDto.IsOngoing.Value,
                 IdUserCreate = projectAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = projectAddDto.IsPublished.HasValue ? projectAddDto.IsPublished.Value : true,
+                IsPublished = projectAddDto.IsPublished,
                 IsDeleted = false
             };
         }
@@ -44,10 +46,11 @@ namespace Portfolio.Application.Extensions
             project.IsFeatured = projectUpdateDto.IsFeatured.HasValue ? projectUpdateDto.IsFeatured.Value : project.IsFeatured;
             project.IsOngoing = projectUpdateDto.IsOngoing.HasValue ? projectUpdateDto.IsOngoing.Value :  project.IsOngoing;
             project.IdUserModification = projectUpdateDto.IdUser;
-            project.IsPublished = projectUpdateDto.IsPublished.HasValue ? projectUpdateDto.IsPublished.Value : project.IsPublished;
+            project.IdUserDelete = (projectUpdateDto.IsDeleted == true) ? projectUpdateDto.IdUser : 0;
+            project.IsPublished = projectUpdateDto.IsPublished;
             project.ModificationDate = DateTime.Now;
-            project.IsDeleted = projectUpdateDto.IsDeleted.HasValue ? projectUpdateDto.IsDeleted.Value : project.IsDeleted;
-            project.DeletedDate = (projectUpdateDto.IsDeleted.HasValue && projectUpdateDto.IsDeleted == true) ? DateTime.Now : project.DeletedDate;
+            project.IsDeleted = projectUpdateDto.IsDeleted ? projectUpdateDto.IsDeleted : project.IsDeleted;
+            project.DeletedDate = (projectUpdateDto.IsDeleted == true) ? DateTime.Now : project.DeletedDate;
 
             return project;
         }
@@ -90,7 +93,9 @@ namespace Portfolio.Application.Extensions
                 EndDate = project.EndDate,
                 IsFeatured = project.IsFeatured,
                 IsOngoing = project.IsOngoing,
-                Categories = new List<CategoryGetModel>()
+                Categories = new List<CategoryGetModel>(),
+                IsPublished = project.IsPublished,
+                IsDeleted = project.IsDeleted
             };
 
         }
@@ -111,7 +116,9 @@ namespace Portfolio.Application.Extensions
                 StartDate = project.StartDate,
                 EndDate = project.EndDate,
                 IsFeatured = project.IsFeatured,
-                IsOngoing = project.IsOngoing
+                IsOngoing = project.IsOngoing,
+                IsPublished = project.IsPublished,
+                IsDeleted = project.IsDeleted
             };
 
         }

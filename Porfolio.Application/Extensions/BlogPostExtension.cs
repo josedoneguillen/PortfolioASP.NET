@@ -1,7 +1,9 @@
 ﻿using System;
 using Portfolio.Application.Dtos.BlogPost;
+using Portfolio.Application.Dtos.Subscription;
 using Portfolio.Application.Models;
 using Portfolio.Domain.Entities;
+using Portfolio.Domain.Entities.Security;
 
 namespace Portfolio.Application.Extensions
 {
@@ -30,10 +32,11 @@ namespace Portfolio.Application.Extensions
             blogPost.ImageUrl = blogPostUpdateDto.ImageUrl ?? blogPost.ImageUrl;
             blogPost.PublishDate = blogPostUpdateDto.PublishDate != null ? blogPostUpdateDto.PublishDate : blogPost.PublishDate;
             blogPost.IdUserModification = blogPostUpdateDto.IdUser;
-            blogPost.IsPublished = blogPostUpdateDto.IsPublished.HasValue ? blogPostUpdateDto.IsPublished.Value : blogPost.IsPublished;
+            blogPost.IdUserDelete = (blogPostUpdateDto.IsDeleted == true) ? blogPostUpdateDto.IdUser : 0;
+            blogPost.IsPublished = blogPostUpdateDto.IsPublished;
             blogPost.ModificationDate = DateTime.Now;
-            blogPost.IsDeleted = blogPostUpdateDto.IsDeleted.HasValue ? blogPostUpdateDto.IsDeleted.Value : blogPost.IsDeleted;
-            blogPost.DeletedDate = (blogPostUpdateDto.IsDeleted.HasValue && blogPostUpdateDto.IsDeleted == true) ? DateTime.Now : blogPost.DeletedDate;
+            blogPost.IsDeleted = blogPostUpdateDto.IsDeleted ? blogPostUpdateDto.IsDeleted : blogPost.IsDeleted;
+            blogPost.DeletedDate = (blogPostUpdateDto.IsDeleted == true) ? DateTime.Now : blogPost.DeletedDate;
 
             return blogPost;
         }
@@ -44,8 +47,10 @@ namespace Portfolio.Application.Extensions
                 Title = blogPost.Title,
                 Slug = blogPost.Slug,
                 Content = blogPost.Content,
-                ImageUrl = blogPost.ImageUrl
-        };
+                ImageUrl = blogPost.ImageUrl,
+                IsPublished = blogPost.IsPublished,
+                IsDeleted = blogPost.IsDeleted
+            };
 
         }
     }

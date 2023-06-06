@@ -1,7 +1,9 @@
 ﻿using System;
 using Portfolio.Application.Dtos.Category;
+using Portfolio.Application.Dtos.Subscription;
 using Portfolio.Application.Models;
 using Portfolio.Domain.Entities;
+using Portfolio.Domain.Entities.Security;
 
 namespace Portfolio.Application.Extensions
 {
@@ -15,7 +17,7 @@ namespace Portfolio.Application.Extensions
                 Description = categoryAddDto.Description,
                 IdUserCreate = categoryAddDto.IdUser,
                 CreationDate = DateTime.Now,
-                IsPublished = categoryAddDto.IsPublished.HasValue ? categoryAddDto.IsPublished.Value : true,
+                IsPublished = categoryAddDto.IsPublished,
                 IsDeleted = false
             };
         }
@@ -24,10 +26,11 @@ namespace Portfolio.Application.Extensions
             category.Name = categoryUpdateDto.Name ?? category.Name;
             category.Description = categoryUpdateDto.Description ?? category.Description;
             category.IdUserModification = categoryUpdateDto.IdUser;
-            category.IsPublished = categoryUpdateDto.IsPublished.HasValue ? categoryUpdateDto.IsPublished.Value : category.IsPublished;
+            category.IdUserDelete = (categoryUpdateDto.IsDeleted == true) ? categoryUpdateDto.IdUser : 0;
+            category.IsPublished = categoryUpdateDto.IsPublished;
             category.ModificationDate = DateTime.Now;
-            category.IsDeleted = categoryUpdateDto.IsDeleted.HasValue ? categoryUpdateDto.IsDeleted.Value : category.IsDeleted;
-            category.DeletedDate = (categoryUpdateDto.IsDeleted.HasValue && categoryUpdateDto.IsDeleted == true) ? DateTime.Now : category.DeletedDate;
+            category.IsDeleted = categoryUpdateDto.IsDeleted ? categoryUpdateDto.IsDeleted : category.IsDeleted;
+            category.DeletedDate = (categoryUpdateDto.IsDeleted == true) ? DateTime.Now : category.DeletedDate;
 
             return category;
         }
@@ -37,7 +40,9 @@ namespace Portfolio.Application.Extensions
             {
                 Id = category.Id,
                 Name = category.Name,
-                Description = category.Description
+                Description = category.Description,
+                IsPublished = category.IsPublished,
+                IsDeleted = category.IsDeleted
             };
 
         }

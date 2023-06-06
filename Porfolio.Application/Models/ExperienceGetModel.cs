@@ -1,8 +1,8 @@
 ﻿using System;
 
 namespace Portfolio.Application.Models
-{
-    public class ExperienceGetModel
+{ 
+    public class ExperienceGetModel : BaseGetModel
     {
         public int? Id { set; get; }
         public string Title { get; set; }
