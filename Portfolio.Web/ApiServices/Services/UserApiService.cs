@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Portfolio.Web.ApiServices.Interfaces;
+using Portfolio.Web.Models;
 using Portfolio.Web.Models.Requests;
 using Portfolio.Web.Models.Responses;
 using System.Text;
@@ -22,9 +23,9 @@ namespace Portfolio.Web.ApiServices.Services
             this.logger = logger;
             this.baseUrl = this.configuration["ApiConfig:urlBase"];
         }
-        public async Task<UserGetResponse> GetUser(int Id)
+        public async Task<CoreGetResponse<UserModel>> GetUser(int Id)
         {
-            UserGetResponse userGet = new UserGetResponse();
+            CoreGetResponse<UserModel> userGet = new CoreGetResponse<UserModel>();
 
             try
             {
@@ -41,7 +42,7 @@ namespace Portfolio.Web.ApiServices.Services
                         {
                             string resp = await response.Content.ReadAsStringAsync();
 
-                            userGet = JsonConvert.DeserializeObject<UserGetResponse>(resp);
+                            userGet = JsonConvert.DeserializeObject<CoreGetResponse<UserModel>>(resp);
                         }
 
                     }
@@ -57,9 +58,9 @@ namespace Portfolio.Web.ApiServices.Services
             return userGet;
         }
 
-        public async Task<UserListResponse> GetUsers()
+        public async Task<CoreListResponse<UserModel>> GetUsers()
         {
-            UserListResponse userList = new UserListResponse();
+            CoreListResponse<UserModel> userList = new CoreListResponse<UserModel>();
 
             try
             {
@@ -73,7 +74,7 @@ namespace Portfolio.Web.ApiServices.Services
                         {
                             string resp = await response.Content.ReadAsStringAsync();
 
-                            userList = JsonConvert.DeserializeObject<UserListResponse>(resp);
+                            userList = JsonConvert.DeserializeObject<CoreListResponse<UserModel>>(resp);
                         }
                     }
                 }
@@ -89,9 +90,9 @@ namespace Portfolio.Web.ApiServices.Services
             return userList;
         }
 
-        public async Task<UserAddResponse> SaveUser(UserSaveRequest userRequest)
+        public async Task<CoreAddResponse> SaveUser(UserSaveRequest userRequest)
         {
-            UserAddResponse result = new UserAddResponse();
+            CoreAddResponse result = new CoreAddResponse();
 
             try
             {
@@ -107,7 +108,7 @@ namespace Portfolio.Web.ApiServices.Services
                         if (response.IsSuccessStatusCode)
                         {
                             string apiResult = await response.Content.ReadAsStringAsync();
-                            result = JsonConvert.DeserializeObject<UserAddResponse>(apiResult);
+                            result = JsonConvert.DeserializeObject<CoreAddResponse>(apiResult);
 
                         }
                     }

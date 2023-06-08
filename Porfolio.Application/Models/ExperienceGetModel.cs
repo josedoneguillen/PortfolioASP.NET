@@ -4,7 +4,6 @@ namespace Portfolio.Application.Models
 { 
     public class ExperienceGetModel : BaseGetModel
     {
-        public int? Id { set; get; }
         public string Title { get; set; }
         public string Company { get; set; }
         public int OrganizationId { get; set; }

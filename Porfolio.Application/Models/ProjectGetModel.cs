@@ -6,7 +6,6 @@ namespace Portfolio.Application.Models
 {
     public class ProjectGetModel : BaseGetModel
     {
-        public int Id { set; get; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Slug { get; set; }

@@ -44,6 +44,7 @@ namespace Portfolio.Application.Extensions
         {
             return new Models.BlogPostGetModel()
             {
+                Id = blogPost.Id,
                 Title = blogPost.Title,
                 Slug = blogPost.Slug,
                 Content = blogPost.Content,

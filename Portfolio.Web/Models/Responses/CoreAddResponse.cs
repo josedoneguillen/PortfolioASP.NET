@@ -1,6 +1,6 @@
 ﻿namespace Portfolio.Web.Models.Responses
 {
-    public class UserAddResponse : CoreResponseModel
+    public class CoreAddResponse : CoreResponseModel
     {
         public int Data { get; set; }
     }
