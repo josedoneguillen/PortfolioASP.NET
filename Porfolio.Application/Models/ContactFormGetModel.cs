@@ -3,7 +3,6 @@ namespace Portfolio.Application.Models
 {
     public class ContactFormGetModel : BaseGetModel
     {
-        public int? Id { set; get; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Subject { get; set; }

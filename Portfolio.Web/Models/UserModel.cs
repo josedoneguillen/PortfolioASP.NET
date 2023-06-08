@@ -1,10 +1,7 @@
 ﻿namespace Portfolio.Web.Models
 {
-    public class UserModel
+    public class UserModel : BaseModel
     {
-        public int Id { get; set; }
-        public bool IsPublished { get; set; }
-        public bool IsDeleted { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

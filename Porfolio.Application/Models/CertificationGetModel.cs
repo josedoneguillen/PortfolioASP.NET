@@ -10,7 +10,6 @@ namespace Portfolio.Application.Models
         {
             this.Categories = new List<CategoryGetModel>();
         }
-        public int Id { set; get; }
         public string Title { get; set; }
         public int OrganizationId { get; set; }
         public string? Organization { get; set; }

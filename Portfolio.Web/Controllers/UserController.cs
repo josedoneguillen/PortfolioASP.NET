@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Portfolio.Web.ApiServices.Interfaces;
+using Portfolio.Web.Models;
 using Portfolio.Web.Models.Requests;
 using Portfolio.Web.Models.Responses;
 using static System.Net.WebRequestMethods;
@@ -26,7 +27,7 @@ namespace Portfolio.Web.Controllers
         // GET: UserController
         public async Task<ActionResult> Index()
         {
-            UserListResponse userList = new UserListResponse();
+            CoreListResponse<UserModel> userList = new CoreListResponse<UserModel>();
 
             try
             {
@@ -57,7 +58,7 @@ namespace Portfolio.Web.Controllers
         // GET: UserController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            UserGetResponse userGet = new UserGetResponse();
+            CoreGetResponse<UserModel> userGet = new CoreGetResponse<UserModel>();
 
             try
             {

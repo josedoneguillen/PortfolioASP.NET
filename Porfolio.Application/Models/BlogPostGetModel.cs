@@ -4,7 +4,6 @@ namespace Portfolio.Application.Models
 {
     public class BlogPostGetModel : BaseGetModel
     {
-        public int? Id { set; get; }
         public string Title { get; set; }
         public string Slug { get; set; }
         public string Content { get; set; }

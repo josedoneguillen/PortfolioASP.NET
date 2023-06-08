@@ -14,6 +14,15 @@ builder.Services.AddHttpClient();
  This registers the interfaces and its implementations ApiService as transient services in the application's service container. 
  This allows dependency injection into other components.
  */
+builder.Services.AddTransient<IBlogPostApiService, BlogPostApiService>();
+builder.Services.AddTransient<ICategoryApiService, CategoryApiService>();
+builder.Services.AddTransient<ICertificationApiService, CertificationApiService>();
+builder.Services.AddTransient<IContactFormApiService, ContactFormApiService>();
+builder.Services.AddTransient<IExperienceApiService, ExperienceApiService>();
+builder.Services.AddTransient<IOrganizationApiService, OrganizationApiService>();
+builder.Services.AddTransient<IProjectApiService, ProjectApiService>();
+builder.Services.AddTransient<IRolApiService, RolApiService>();
+builder.Services.AddTransient<ISubscriptionApiService, SubscriptionApiService>();
 builder.Services.AddTransient<IUserApiService, UserApiService>();
 
 var app = builder.Build();
