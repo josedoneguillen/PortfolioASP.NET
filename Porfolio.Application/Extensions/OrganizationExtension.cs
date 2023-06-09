@@ -42,6 +42,7 @@ namespace Portfolio.Application.Extensions
         {
             return new Models.OrganizationGetModel()
             {
+                Id = organization.Id,
                 Name = organization.Name,
                 Description = organization.Description,
                 Website = organization.Website,

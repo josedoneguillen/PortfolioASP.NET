@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Portfolio.Web.Models.SubscriptionModel>
+﻿@model IEnumerable<Portfolio.Web.Models.ContactFormModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,10 +16,16 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OptOut)
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsPublished)
@@ -32,15 +38,21 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OptOut)
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsPublished)
