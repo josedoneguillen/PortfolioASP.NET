@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Portfolio.Web.Models.UserModel>
+﻿@model IEnumerable<Portfolio.Web.Models.CertificationModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,31 +16,31 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.OrganizationId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Organization)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                @Html.DisplayNameFor(model => model.DateIssued)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CredentialId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CredentialUrl)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                @Html.DisplayNameFor(model => model.ImageUrl)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Position)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rol)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RolId)
+                @Html.DisplayNameFor(model => model.FileUrl)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsPublished)
@@ -53,37 +53,36 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-
-           <td>
-               @Html.DisplayFor(modelItem => item.Id)
-           </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.OrganizationId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.Organization)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                @Html.DisplayFor(modelItem => item.DateIssued)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CredentialId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CredentialUrl)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                @Html.DisplayFor(modelItem => item.ImageUrl)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RolId)
+                @Html.DisplayFor(modelItem => item.FileUrl)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsPublished)
@@ -93,8 +92,8 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id  })
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
             </td>
         </tr>
 }
