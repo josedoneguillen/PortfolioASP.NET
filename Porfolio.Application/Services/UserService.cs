@@ -9,6 +9,7 @@ using Portfolio.Infrastructure.Interfaces;
 using Portfolio.Domain.Entities.Security;
 using Portfolio.Application.Extensions;
 using System.Collections.Generic;
+using Portfolio.Application.Models;
 
 namespace Portfolio.Application.Services
 {
@@ -24,6 +25,49 @@ namespace Portfolio.Application.Services
             this.rolRepository = rolRepository;
             this.result = new ServiceResult();
             this.logger = logger;
+        }
+
+        public async Task<ServiceResult> UserLogin(UserLoginDto userLoginDto)
+        {
+
+            try
+            {
+                // Field Validations
+                if (String.IsNullOrEmpty( userLoginDto.Email ))
+                {
+                    this.result.Message = "El email del usuario es obligatorio";
+                    this.result.Success = false;
+                    return this.result;
+
+                }
+
+                if (String.IsNullOrEmpty( userLoginDto.Password ))
+                {
+                    this.result.Message = "La contraseña del usuario es obligatoria";
+                    this.result.Success = false;
+                    return this.result;
+                }
+
+                User user = await this.userRepository.UserLogin(userLoginDto.Email,
+                                                     userLoginDto.Password);
+                if (user == null)
+                {
+                    this.result.Message = "Usuario o contraseña incorrectos";
+                    this.result.Success = false;
+                    return this.result;
+                }
+
+                this.result.Data = user;
+            }
+            catch (Exception ex)
+            {
+                this.result.Success = false;
+                this.result.Message = "Error al obtener el usuario para hacer login.";
+                this.logger.LogError($"{this.result.Message}  {ex.Message}", ex.ToString());
+            }
+
+
+            return this.result;
         }
 
         public async Task<ServiceResult> Get()
@@ -69,14 +113,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id del usuario a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (userUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificacion es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 User user = await this.userRepository.GetEntityByID(userUpdateDto.Id);
@@ -86,7 +130,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Usuario no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 user = user.ConvertUserUpdateDtoToUser(userUpdateDto);
@@ -116,28 +160,28 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Nombre es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (string.IsNullOrEmpty(userAddDto.LastName))
                 {
                     this.result.Message = "Apellido es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (string.IsNullOrEmpty(userAddDto.Email))
                 {
                     this.result.Message = "Email es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (string.IsNullOrEmpty(userAddDto.Password))
                 {
                     this.result.Message = "Clave es requerida";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 User user = userAddDto.ConvertUserAddDtoToUser();

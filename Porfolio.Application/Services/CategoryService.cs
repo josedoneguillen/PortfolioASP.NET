@@ -67,14 +67,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id de la subscripción a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (categoryUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificación es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Category category = await this.categoryRepository.GetEntityByID(categoryUpdateDto.Id);
@@ -84,7 +84,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Esta Subscrición no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 category = category.ConvertCategoryUpdateDtoToCategory(categoryUpdateDto);
@@ -114,7 +114,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Nombre es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Category category = categoryAddDto.ConvertCategoryAddDtoToCategory();

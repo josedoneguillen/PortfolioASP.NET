@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Portfolio.Application.Contract;
 using Portfolio.Application.Dtos.ContactForm;
 
@@ -8,6 +9,7 @@ namespace Portfolio.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ContactFormController : ControllerBase
     {
         private readonly IContactFormService contactFormService;

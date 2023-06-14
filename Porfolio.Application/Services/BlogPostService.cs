@@ -67,14 +67,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id del post a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (blogPostUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificación es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 BlogPost blogPost = await this.blogPostRepository.GetEntityByID(blogPostUpdateDto.Id);
@@ -84,7 +84,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Este post no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 blogPost = blogPost.ConvertBlogPostUpdateDtoToBlogPost(blogPostUpdateDto);
@@ -114,7 +114,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Titulo es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 BlogPost blogPost = blogPostAddDto.ConvertBlogPostAddDtoToBlogPost();

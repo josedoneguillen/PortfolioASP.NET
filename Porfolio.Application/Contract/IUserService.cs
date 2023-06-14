@@ -10,5 +10,7 @@ namespace Portfolio.Application.Contract
         Task<ServiceResult> GetById(int Id);
         Task<ServiceResult> SaveUser(UserAddDto userAddDto);
         Task<ServiceResult> ModifyUser(UserUpdateDto userUpdateDto);
+
+        Task<ServiceResult> UserLogin(UserLoginDto userLoginDto);
     }
 }

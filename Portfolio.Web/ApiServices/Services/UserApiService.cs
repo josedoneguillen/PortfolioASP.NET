@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Portfolio.Web.ApiServices.Interfaces;
 using Portfolio.Web.Models;
 using Portfolio.Web.Models.Requests;
 using Portfolio.Web.Models.Responses;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Portfolio.Web.ApiServices.Services
@@ -68,8 +70,13 @@ namespace Portfolio.Web.ApiServices.Services
                 {
                     string url = $" {this.baseUrl}/User";
 
+                    // Set the Authorization header with the JWT token
+                    //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
+
+
                     using (var response = await httpClient.GetAsync(url))
                     {
+
                         if (response.IsSuccessStatusCode)
                         {
                             string resp = await response.Content.ReadAsStringAsync();
