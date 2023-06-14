@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Text;
-using System.Security.Cryptography;
+using Portfolio.Infraestructure.Core;
 using Portfolio.Application.Dtos.User;
 using Portfolio.Application.Models;
 using Portfolio.Domain.Entities.Security;
@@ -17,7 +16,7 @@ namespace Portfolio.Application.Extensions
                 LastName = userAddDto.LastName,
                 Email = userAddDto.Email,
                 PhoneNumber = userAddDto.PhoneNumber,
-                Password = userAddDto.Password.EncryptToMD5(),
+                Password = Encrypt.GetSHA512(userAddDto.Password),
                 Description = userAddDto.Description,
                 Image = userAddDto.Image,
                 Position = userAddDto.Position,
@@ -34,7 +33,7 @@ namespace Portfolio.Application.Extensions
             user.LastName = userUpdateDto.LastName ?? user.LastName;
             user.Email = userUpdateDto.Email ?? user.Email;
             user.PhoneNumber = userUpdateDto.PhoneNumber ?? user.PhoneNumber;
-            user.Password = userUpdateDto.Password.EncryptToMD5() ?? user.Password;
+            user.Password = Encrypt.GetSHA512(userUpdateDto.Password) ?? user.Password;
             user.Description = userUpdateDto.Description ?? user.Description;
             user.Image = userUpdateDto.Image ?? user.Image;
             user.Position = userUpdateDto.Position ?? user.Position;
@@ -66,28 +65,6 @@ namespace Portfolio.Application.Extensions
                 IsDeleted = user.IsDeleted
             };
 
-        }
-
-        public static string EncryptToMD5(this string password)
-        {
-            if (string.IsNullOrEmpty(password))
-            {
-                return password;
-            }
-
-                using (MD5 md5 = MD5.Create())
-            {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(password);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("x2"));
-                }
-
-                return sb.ToString();
-            }
         }
     }
 }

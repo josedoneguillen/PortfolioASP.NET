@@ -67,14 +67,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id de la forma de contacto a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (contactFormUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificación es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 ContactForm contactForm = await this.contactFormRepository.GetEntityByID(contactFormUpdateDto.Id);
@@ -84,7 +84,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Esta forma de contacto no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 contactForm = contactForm.ConvertContactFormUpdateDtoToContactForm(contactFormUpdateDto);
@@ -114,7 +114,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Nombre es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 ContactForm contactForm = contactFormAddDto.ConvertContactFormAddDtoToContactForm();

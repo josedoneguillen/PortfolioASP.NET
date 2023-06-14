@@ -67,14 +67,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id de la organización a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (organizationUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificación es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Organization organization = await this.organizationRepository.GetEntityByID(organizationUpdateDto.Id);
@@ -84,7 +84,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Esta organización no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 organization = organization.ConvertOrganizationUpdateDtoToOrganization(organizationUpdateDto);
@@ -114,7 +114,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Nombre es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Organization organization = organizationAddDto.ConvertOrganizationAddDtoToOrganization();

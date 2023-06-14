@@ -103,14 +103,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id del proyecto a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (projectUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificacion es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Project project = await this.projectRepository.GetEntityByID(projectUpdateDto.Id);
@@ -120,7 +120,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Proyecto no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 project = project.ConvertProjectUpdateDtoToProject(projectUpdateDto);
@@ -152,14 +152,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Titulo es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (projectAddDto.OrganizationId <= 0)
                 {
                     this.result.Message = "Id de la organización es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
 

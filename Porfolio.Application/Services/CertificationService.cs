@@ -107,14 +107,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id del certificado a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (certificationUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificacion es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Certification certification = await this.certificationRepository.GetEntityByID(certificationUpdateDto.Id);
@@ -124,7 +124,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Certificado no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 certification = certification.ConvertCertificationUpdateDtoToCertification(certificationUpdateDto);
@@ -156,21 +156,21 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Titulo es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (certificationAddDto.OrganizationId <= 0)
                 {
                     this.result.Message = "Id de la organización es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (string.IsNullOrEmpty(certificationAddDto.DateIssued.ToString()))
                 {
                     this.result.Message = "Fecha es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Certification certification = certificationAddDto.ConvertCertificationAddDtoToCertification();

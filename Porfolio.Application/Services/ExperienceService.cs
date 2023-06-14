@@ -67,14 +67,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id de la experiencia a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (experienceUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificación es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Experience experience = await this.experienceRepository.GetEntityByID(experienceUpdateDto.Id);
@@ -84,7 +84,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Esta experiencia no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 experience = experience.ConvertExperienceUpdateDtoToExperience(experienceUpdateDto);
@@ -114,7 +114,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Titulo es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Experience experience = experienceAddDto.ConvertExperienceAddDtoToExperience();

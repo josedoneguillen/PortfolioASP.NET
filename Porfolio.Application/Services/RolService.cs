@@ -67,14 +67,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Id del rol a modificar es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (rolUpdateDto.IdUser == 0)
                 {
                     this.result.Message = "Id del usuario que realiza la modificación es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Rol rol = await this.rolRepository.GetEntityByID(rolUpdateDto.Id);
@@ -84,7 +84,7 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Rol no existe";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 rol = rol.ConvertRolUpdateDtoToRol(rolUpdateDto);
@@ -114,14 +114,14 @@ namespace Portfolio.Application.Services
                 {
                     this.result.Message = "Nombre es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 if (string.IsNullOrEmpty(rolAddDto.Description))
                 {
                     this.result.Message = "Descripción es requerido";
                     this.result.Success = false;
-                    return result;
+                    return this.result;
                 }
 
                 Rol rol = rolAddDto.ConvertRolAddDtoToRol();

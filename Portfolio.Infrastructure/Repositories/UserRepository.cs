@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Portfolio.Infraestructure.Core;
 
 namespace Portfolio.Infrastructure.Repositories
 {
@@ -19,6 +20,23 @@ namespace Portfolio.Infrastructure.Repositories
         {
             this._context = context;
             this._logger = logger;
+        }
+
+        public async Task<User> UserLogin(string email, string password)
+        {
+            User user = new User();
+            try
+            {
+                user = await this._context.Users.SingleOrDefaultAsync(us => (us.Email == email && us.Password == Encrypt.GetSHA512(password)) && (!us.IsDeleted && us.IsPublished));
+
+            }
+            catch (Exception ex)
+            {
+
+                this._logger.LogError("Error obteniendo el usuario.", ex.Message);
+            }
+
+            return user;
         }
 
         public async override Task<IEnumerable<User>> GetAll() 
