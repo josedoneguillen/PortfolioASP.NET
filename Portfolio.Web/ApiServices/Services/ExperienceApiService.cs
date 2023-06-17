@@ -3,6 +3,7 @@ using Portfolio.Web.ApiServices.Interfaces;
 using Portfolio.Web.Models;
 using Portfolio.Web.Models.Requests;
 using Portfolio.Web.Models.Responses;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Portfolio.Web.ApiServices.Services
@@ -13,15 +14,18 @@ namespace Portfolio.Web.ApiServices.Services
         private readonly IConfiguration configuration;
         private readonly ILogger<ExperienceApiService> logger;
         private readonly string baseUrl;
+        private readonly TokenManager tokenManager;
 
         public ExperienceApiService(IHttpClientFactory clientFactory,
                                  IConfiguration configuration,
-                                 ILogger<ExperienceApiService> logger)
+                                 ILogger<ExperienceApiService> logger,
+                                 TokenManager tokenManager)
         {
             this.clientFactory = clientFactory;
             this.configuration = configuration;
             this.logger = logger;
             this.baseUrl = this.configuration["ApiConfig:urlBase"];
+            this.tokenManager = tokenManager;
         }
         public async Task<CoreGetResponse<ExperienceModel>> GetExperience(int Id)
         {
@@ -34,6 +38,9 @@ namespace Portfolio.Web.ApiServices.Services
                 {
 
                     string url = $" {this.baseUrl}/Experience/{Id}";
+
+                    // Set the Authorization header with the JWT token
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
 
                     using (var response = await httpClient.GetAsync(url))
                     {
@@ -68,6 +75,9 @@ namespace Portfolio.Web.ApiServices.Services
                 {
                     string url = $" {this.baseUrl}/Experience";
 
+                    // Set the Authorization header with the JWT token
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
+
                     using (var response = await httpClient.GetAsync(url))
                     {
                         if (response.IsSuccessStatusCode)
@@ -100,6 +110,8 @@ namespace Portfolio.Web.ApiServices.Services
                 {
                     string url = $" {this.baseUrl}/Experience";
 
+                    // Set the Authorization header with the JWT token
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
 
                     StringContent request = new StringContent(JsonConvert.SerializeObject(experienceRequest), Encoding.UTF8, "application/json");
 
@@ -134,6 +146,9 @@ namespace Portfolio.Web.ApiServices.Services
                 using (var httpClient = this.clientFactory.CreateClient())
                 {
                     string url = $" {this.baseUrl}/Experience";
+
+                    // Set the Authorization header with the JWT token
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
 
                     StringContent request = new StringContent(JsonConvert.SerializeObject(experienceRequest), Encoding.UTF8, "application/json");
 

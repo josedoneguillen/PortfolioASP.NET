@@ -1,6 +1,6 @@
 ﻿namespace Portfolio.Web.Models.Requests
 {
-    public class UserLoginRequest
+    public class AuthLoginRequest
     {
         public string? Email { set; get; }
         public string? Password { set; get; }

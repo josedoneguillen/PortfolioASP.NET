@@ -15,15 +15,18 @@ namespace Portfolio.Web.ApiServices.Services
         private readonly IConfiguration configuration;
         private readonly ILogger<UserApiService> logger;
         private readonly string baseUrl;
+        private readonly TokenManager tokenManager;
 
         public UserApiService(IHttpClientFactory clientFactory,
                                  IConfiguration configuration,
-                                 ILogger<UserApiService> logger)
+                                 ILogger<UserApiService> logger,
+                                 TokenManager tokenManager)
         {
             this.clientFactory = clientFactory;
             this.configuration = configuration;
             this.logger = logger;
             this.baseUrl = this.configuration["ApiConfig:urlBase"];
+            this.tokenManager = tokenManager;
         }
         public async Task<CoreGetResponse<UserModel>> GetUser(int Id)
         {
@@ -36,6 +39,10 @@ namespace Portfolio.Web.ApiServices.Services
                 {
 
                     string url = $" {this.baseUrl}/User/{Id}";
+
+                    // Set the Authorization header with the JWT token
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
+
 
                     using (var response = await httpClient.GetAsync(url))
                     {
@@ -71,8 +78,7 @@ namespace Portfolio.Web.ApiServices.Services
                     string url = $" {this.baseUrl}/User";
 
                     // Set the Authorization header with the JWT token
-                    //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
-
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
 
                     using (var response = await httpClient.GetAsync(url))
                     {
@@ -106,6 +112,9 @@ namespace Portfolio.Web.ApiServices.Services
                 using (var httpClient = this.clientFactory.CreateClient())
                 {
                     string url = $" {this.baseUrl}/User";
+
+                    // Set the Authorization header with the JWT token
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
 
 
                     StringContent request = new StringContent(JsonConvert.SerializeObject(userRequest), Encoding.UTF8, "application/json");
@@ -141,6 +150,10 @@ namespace Portfolio.Web.ApiServices.Services
                 using (var httpClient = this.clientFactory.CreateClient())
                 {
                     string url = $" {this.baseUrl}/User";
+
+                    // Set the Authorization header with the JWT token
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenManager.JwtToken);
+
 
                     StringContent request = new StringContent(JsonConvert.SerializeObject(userRequest), Encoding.UTF8, "application/json");
 

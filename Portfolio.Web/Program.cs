@@ -10,10 +10,17 @@ builder.Services.AddControllersWithViews();
 // This registers the HttpClient service in the application's service container. This is used for making HTTP requests to external APIs.
 builder.Services.AddHttpClient();
 
+// Add Session
+builder.Services.AddSession();
+
+// Add token dependency
+builder.Services.AddSingleton<TokenManager>();
+
 /*
  This registers the interfaces and its implementations ApiService as transient services in the application's service container. 
  This allows dependency injection into other components.
  */
+builder.Services.AddTransient<IAuthApiService, AuthApiService>();
 builder.Services.AddTransient<IBlogPostApiService, BlogPostApiService>();
 builder.Services.AddTransient<ICategoryApiService, CategoryApiService>();
 builder.Services.AddTransient<ICertificationApiService, CertificationApiService>();
@@ -46,7 +53,7 @@ app.UseAuthorization();
  */
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
+    pattern: "{controller=Auth}/{action=Login}/{id?}"
 );
 
 app.Run();
