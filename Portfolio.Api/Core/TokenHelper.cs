@@ -16,39 +16,6 @@ namespace Portfolio.Auth.Api.Core
             // Get and encode signing key
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(siginigKey));
 
-            /* Other way to generate the jwt
-             * 
-            // Setup claims
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, "baseWebApiSubject"),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToString()),
-                new Claim("id", user.Id.ToString()),
-                new Claim("email", user.Email.ToString())
-            };
-
-            // Signing credentials
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-
-            // Set expiration variable
-            var expiration = DateTime.Now.AddHours(48);
-
-            // Create token
-            var token = new JwtSecurityToken(
-                    "http://localhost:5179/",
-                    "http://localhost:5179/",
-                    claims,
-                    expires: expiration,
-                    signingCredentials: signIn
-                );
-
-
-            // Generate token with token handler
-            var finalToken = new JwtSecurityTokenHandler().WriteToken(token);
-            */
-
             // Initialize token handler
             var tokenHandler = new JwtSecurityTokenHandler();
 
